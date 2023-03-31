@@ -1,0 +1,2 @@
+INSERT INTO users (name, lastname, email, created_at, updated_at) VALUES ('Juan Camilo',  'Fandiño Benavides', 'jcfandinob@libertadores.edu.co', '2023-01-01', '2023-01-01');
+INSERT INTO users (name, lastname, email, created_at, updated_at) VALUES ('Andres Felipe',  'Guerrero Leal', 'afguerrerol01@libertadores.edu.co', '2023-01-01', '2023-01-01');
