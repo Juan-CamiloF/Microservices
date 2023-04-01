@@ -7,11 +7,15 @@
 
 ## Docker
 
+### DB
+
 - Ejecutar base de datos
 
 ```
 docker compose up --build -d db
 ```
+
+### Servicios
 
 - Ejecutar user-service
 
@@ -25,7 +29,13 @@ docker compose up --build user
 docker compose up --build task
 ```
 
-Si se necesita los servicios en segundo plano agrega bandera *-d*
+- Ejecutar state-service
+
+```
+docker compose up --build state
+```
+
+Si se necesita los servicios en segundo plano agrega bandera _-d_
 
 ## Postman
 

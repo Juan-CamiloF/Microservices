@@ -199,7 +199,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/api/v1/task/2",
+							"raw": "http://localhost:8081/api/v1/task/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -209,7 +209,7 @@
 								"api",
 								"v1",
 								"task",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -244,7 +244,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 2,\n    \"title\": \"titulo aaaa\",\n    \"description\": \"pablo\",\n    \"status\": \"hecho\",\n    \"userId\": 1\n}",
+							"raw": "{\n    \"id\": 1,\n    \"title\": \"titulo aaaa\",\n    \"description\": \"pablo\",\n    \"status\": \"hecho\",\n    \"userId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -252,7 +252,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/api/v1/task/2",
+							"raw": "http://localhost:8081/api/v1/task/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -262,9 +262,22 @@
 								"api",
 								"v1",
 								"task",
-								"2"
+								"1"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "STATE",
+			"item": [
+				{
+					"name": "GET STATES",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}

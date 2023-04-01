@@ -1,0 +1,4 @@
+INSERT INTO states (name) VALUES ('ABIERTA');
+INSERT INTO states (name) VALUES ('EN PROGRESO');
+INSERT INTO states (name) VALUES ('PRUEBAS');
+INSERT INTO states (name) VALUES ('TERMINADO');

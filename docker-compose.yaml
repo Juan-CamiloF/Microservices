@@ -22,6 +22,17 @@ services:
       - config.env
     volumes:
       - .:/app
+  state:
+    image: "state:1"
+    build: state-service/
+    ports:
+      - "8083:8083"
+    depends_on:
+      - db
+    env_file:
+      - config.env
+    volumes:
+      - .:/app
   db:
     image: postgres:latest
     restart: always
