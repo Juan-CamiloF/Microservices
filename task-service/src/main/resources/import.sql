@@ -1,2 +1,1 @@
-INSERT INTO tasks (title, description, status, user_id) VALUES ('Backend', 'Descripción', 'En progreso', (SELECT id from users where name = 'Juan Camilo'));
-INSERT INTO tasks (title, description, status, user_id) VALUES ('Frontend', 'Descripción', 'En progreso', (SELECT id from users where name = 'Andres Felipe'));
+INSERT INTO tasks (name, description, status, title, user_id) VALUES ('Backend', 'Realizar backend microservicios', '')
