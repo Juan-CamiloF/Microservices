@@ -1,44 +1,112 @@
 version: "3"
 services:
-  user:
-    image: "user:1"
-    build: user-service/
+  # Servicios para Bogotá
+  bogota-user:
+    image: "bogota-user:1"
+    build: bogota-services/bogota-user-service/
     ports:
       - "8081:8081"
     depends_on:
-      - db
+      - db-bogota
     env_file:
       - config.env
     volumes:
       - .:/app
-  task:
-    image: "task:1"
-    build: task-service/
+  bogota-task:
+    image: "bogota-task:1"
+    build: bogota-services/bogota-task-service/
     ports:
       - "8082:8082"
     depends_on:
-      - db
+      - db-bogota
     env_file:
       - config.env
     volumes:
       - .:/app
-  state:
-    image: "state:1"
-    build: state-service/
+  bogota-state:
+    image: "bogota-state:1"
+    build: bogota-services/bogota-state-service/
     ports:
       - "8083:8083"
     depends_on:
-      - db
+      - db-bogota
     env_file:
       - config.env
     volumes:
       - .:/app
-  db:
+  # Servicios para Medellín
+  medellin-user:
+    image: "medellin-user:1"
+    build: medellin-services/medellin-user-service/
+    ports:
+      - "8084:8084"
+    depends_on:
+      - db-medellin
+    env_file:
+      - config.env
+    volumes:
+      - .:/app
+  medellin-task:
+    image: "medellin-task:1"
+    build: medellin-services/medellin-task-service/
+    ports:
+      - "8085:8085"
+    depends_on:
+      - db-medellin
+    env_file:
+      - config.env
+    volumes:
+      - .:/app
+  medellin-state:
+    image: "medellin-state:1"
+    build: medellin-services/medellin-state-service/
+    ports:
+      - "8086:8086"
+    depends_on:
+      - db-medellin
+    env_file:
+      - config.env
+    volumes:
+      - .:/app
+  # DB Bogotá
+  db-bogota:
     image: postgres:latest
     restart: always
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: microservices-postgres
+      POSTGRES_DB: db-bogota
     ports:
       - "5433:5432"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+  # DB Bogotá
+  db-medellin:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db-medellin
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+  api:
+    image: "api-gateway:1"
+    build: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - bogota-user
+      - medellin-user
+      - bogota-task
+      - medellin-task
+      - bogota-state
+      - medellin-state
+      - db-bogota
+      - db-medellin
+    env_file:
+      - config.env
+    volumes:
+      - .:/app

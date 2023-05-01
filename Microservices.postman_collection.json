@@ -7,279 +7,611 @@
 	},
 	"item": [
 		{
-			"name": "USER",
+			"name": "BOGOTA",
 			"item": [
 				{
-					"name": "CREATE USER",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Fandiño\",\n    \"email\": \"juan@gmail.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "USER",
+					"item": [
+						{
+							"name": "CREATE USER",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Fandiño\",\n    \"email\": \"juan@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"user"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:8081/api/v1/user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UPDATE USER",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": 1,\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Fandiño Benavides\",\n    \"email\": \"jcfandinob@libertadores.edu.co\",\n    \"createdAt\": \"2023-01-01\",\n    \"updatedAt\": \"2023-01-01\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "UPDATE USER",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Fandiño Benavides\",\n    \"email\": \"jcfandinob@libertadores.edu.co\",\n    \"createdAt\": \"2023-01-01\",\n    \"updatedAt\": \"2023-01-01\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"user",
+										"1"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:8081/api/v1/user/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"1"
-							]
+						{
+							"name": "GET USERS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET USER",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE USER",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "GET USERS",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8081/api/v1/user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"user"
-							]
+					"name": "TASK",
+					"item": [
+						{
+							"name": "CREATE TASK",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"titulo\",\n    \"description\": \"pablo\",\n    \"status\": \"hecho\",\n    \"userId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/task",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"task"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET TASK BY USER",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/task/by-user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"task",
+										"by-user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET TASK",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/task/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"task",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE TASK",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/task/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"task",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE TASK",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 3,\n    \"title\": \"titulo aaaa\",\n    \"description\": \"pablo\",\n    \"status\": \"hecho\",\n    \"userId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/task/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"task",
+										"3"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "GET USER",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8081/api/v1/user/10",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"10"
-							]
+					"name": "STATE",
+					"item": [
+						{
+							"name": "GET STATES",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/bogota/state",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"bogota",
+										"state"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE USER",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8081/api/v1/user/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"1"
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
 		{
-			"name": "TASK",
+			"name": "MEDELLIN",
 			"item": [
 				{
-					"name": "CREATE TASK",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"titulo\",\n    \"description\": \"pablo\",\n    \"status\": \"hecho\",\n    \"userId\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "USER",
+					"item": [
+						{
+							"name": "CREATE USER",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Fandiño\",\n    \"email\": \"juan@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/medellin/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"medellin",
+										"user"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:8081/api/v1/task",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"task"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET TASK BY USER",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8081/api/v1/task/by-user/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"task",
-								"by-user",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET TASK",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8081/api/v1/task/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"task",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "DELETE TASK",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8081/api/v1/task/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"task",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "UPDATE TASK",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": 1,\n    \"title\": \"titulo aaaa\",\n    \"description\": \"pablo\",\n    \"status\": \"hecho\",\n    \"userId\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "UPDATE USER",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Fandiño Benavides\",\n    \"email\": \"jcfandinob@libertadores.edu.co\",\n    \"createdAt\": \"2023-01-01\",\n    \"updatedAt\": \"2023-01-01\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/medellin/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"medellin",
+										"user",
+										"1"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:8081/api/v1/task/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"api",
-								"v1",
-								"task",
-								"1"
-							]
+						{
+							"name": "GET USERS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/medellin/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"medellin",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET USER",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/medellin/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"medellin",
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE USER",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/medellin/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"medellin",
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "STATE",
-			"item": [
+					]
+				},
 				{
-					"name": "GET STATES",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
+					"name": "TASK",
+					"item": [
+						{
+							"name": "CREATE TASK",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"titulo\",\n    \"description\": \"pablo\",\n    \"status\": \"hecho\",\n    \"userId\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/medellin/task",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"medellin",
+										"task"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET TASK BY USER",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/medellin/task/by-user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"medellin",
+										"task",
+										"by-user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET TASK",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/task/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"task",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE TASK",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/api/v1/task/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"task",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE TASK",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"title\": \"titulo aaaa\",\n    \"description\": \"pablo\",\n    \"status\": \"hecho\",\n    \"userId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/api/v1/task/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"v1",
+										"task",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "STATE",
+					"item": [
+						{
+							"name": "GET STATES",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/medellin/state",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"medellin",
+										"state"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
