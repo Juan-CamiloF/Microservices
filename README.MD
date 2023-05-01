@@ -8,7 +8,7 @@
 - bogota-task-service: Servicio para tareas de un usuario de Bogotá
 - bogota-state-service: Servicio para estados de tareas de Bogotá
 
-### Medellin
+### Medellín
 
 - medellin-user-service: Servicio para usuarios de Medellin
 - medellin-task-service: Servicio para tareas de un usuario de Medellin
@@ -20,13 +20,11 @@
 
 ```
 docker compose up -d
-
 ```
 ## Todos los servicios en primer plano
 
 ```
 docker compose up
-
 ```
 ## Todos los servicios en primer plano separando los servicios en pestañas
 
