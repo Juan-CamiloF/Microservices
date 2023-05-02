@@ -50,6 +50,12 @@ docker compose up --build -d db-bogota
 docker compose up --build -d db-medellin
 ```
 
+### API
+
+```
+docker compose up --build -d api
+```
+
 ### Servicios Bogotá
 
 - Ejecutar bogota-user-service
