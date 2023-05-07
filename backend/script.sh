@@ -5,6 +5,8 @@ sudo docker compose up --build -d db-bogota
 echo "Base de datos de Bogotá en funcionamiento"
 sudo docker compose up --build -d db-medellin
 echo "Base de datos de Medellín en funcionamiento"
+gnome-terminal --tab --title="Api-Gateway" -- sh -c "sudo docker compose up --build api"
+echo "Apigateway"
 gnome-terminal --tab --title="Bogota-User" -- sh -c "sudo docker compose up --build bogota-user"
 echo "Servicio de usuarios Bogota"
 gnome-terminal --tab --title="Bogota-Task" -- sh -c "sudo -s docker compose up --build bogota-task"
