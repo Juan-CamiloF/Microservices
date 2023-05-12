@@ -6,8 +6,8 @@ import ModalAddTask from "./ModalAddTask";
 import ModalEditTask from "./ModalEditTask";
 import ModalInfoTask from "./ModalInfoTask";
 
-function TableTasks() {
-  const { id } = useParams();
+function TableTasks({ id, city }) {
+
 
   const [show, setShow] = useState(null);
 
@@ -53,7 +53,7 @@ function TableTasks() {
       };
 
       const { data } = await axios.get(
-        `http://localhost:8081/api/v1/task/by-user/${id}`,
+        `http://localhost:8080/api/v1/${city}/task/by-user/${id}`,
         config
       );
 
@@ -69,7 +69,7 @@ function TableTasks() {
     };
 
     const { data } = await axios.put(
-      `http://localhost:8081/api/v1/task/${updateUser.id}`,
+      `http://localhost:8080/api/v1/${city}/task/${updateUser.id}`,
       updateUser,
       config
     );
@@ -99,7 +99,7 @@ function TableTasks() {
       "Access-Control-Allow-Origin": "*",
     };
 
-    await axios.delete(`http://localhost:8081/api/v1/task/${id}`, config);
+    await axios.delete(`http://localhost:8080/api/v1/${city}/task/${id}`, config);
 
     toast.success("Tarea eliminada correctamente", {
       position: "top-right",
@@ -126,7 +126,7 @@ function TableTasks() {
     newTask.userId = id;
 
     const { data } = await axios.post(
-      `http://localhost:8081/api/v1/task`,
+      `http://localhost:8080/api/v1/${city}/task`,
       newTask,
       config
     );
@@ -158,7 +158,7 @@ function TableTasks() {
     }
 
     const { data } = await axios.put(
-      `http://localhost:8081/api/v1/task/${task.id}`,
+      `http://localhost:8080/api/v1/task/${task.id}`,
       task,
       config
     );
@@ -247,7 +247,7 @@ function TableTasks() {
                       </td>
 
                       <td className="w-4">
-                        <p className={`text-sm w-full leading-3 text-gray-800 px-2 py-1.5 bg-yellow-100 rounded-full group-hover:bg-yellow-700 group-hover:text-white ${task.status == "ABIERTA" ? "bg-gray-300" : task.status == "EN PROGRESO" ? "bg-yellow-300" : task.status == "PRUEBAS" ? "bg-blue-300" : "bg-green-300" } `}>
+                        <p className={`text-sm w-full leading-3 text-gray-800 px-2 py-1.5 bg-yellow-100 rounded-full group-hover:bg-yellow-700 group-hover:text-white ${task.status == "ABIERTA" ? "bg-gray-300" : task.status == "EN PROGRESO" ? "bg-yellow-300" : task.status == "PRUEBAS" ? "bg-blue-300" : "bg-green-300"} `}>
                           {task.status}
                         </p>
                       </td>
@@ -360,6 +360,8 @@ function TableTasks() {
         <ModalAddTask
           handleModalAddTask={handleModalAddTask}
           crearTask={crearTask}
+          id={id}
+          city={city}
         />
       )}
 
@@ -368,11 +370,15 @@ function TableTasks() {
           userEdit={userEdit}
           handleModalEdit={handleModalEdit}
           editarUsuario={editarUsuario}
+          id={id}
+          city={city}
         />
       )}
 
       {modalInfo && (
-        <ModalInfoTask taskInfo={userInfo} handleModalInfo={handleModalInfo} />
+        <ModalInfoTask taskInfo={userInfo} handleModalInfo={handleModalInfo}
+          id={id}
+          city={city} />
       )}
     </>
   );

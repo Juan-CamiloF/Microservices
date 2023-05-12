@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 function ModalEditUser({ userEdit, handleModalEdit, editarUsuario }) {
   const [userUpdate, setUserUpdate] = useState(userEdit);
+
+  const { email, name, lastname } = userUpdate
 
   const onChange = (e) => {
     setUserUpdate({
@@ -14,6 +17,21 @@ function ModalEditUser({ userEdit, handleModalEdit, editarUsuario }) {
   const onSubmit = (e) => {
     e.preventDefault();
     userUpdate.updatedAt = "2023-08-09";
+
+    if ([email, name, lastname].includes("")) {
+      toast.error("Todos los campos son obligatorios", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
+
     editarUsuario(userUpdate);
     handleModalEdit()
   };
@@ -97,18 +115,18 @@ function ModalEditUser({ userEdit, handleModalEdit, editarUsuario }) {
                     />
                   </div>
                   <div className="flex items-center justify-between mt-9">
-                  <button
-                    onClick={handleModalEdit}
-                    className="px-6 py-3 bg-gray-400 hover:bg-gray-500 shadow rounded text-sm text-white"
-                  >
-                    Cancel
-                  </button>
-                  <button type="submit" className="px-6 py-3 bg-gray-700 hover:bg-gray-800 hover:bg-opacity-80 shadow rounded text-sm text-white">
-                    Confirmar Cambios
-                  </button>
-                </div>
+                    <button
+                      onClick={handleModalEdit}
+                      className="px-6 py-3 bg-gray-400 hover:bg-gray-500 shadow rounded text-sm text-white"
+                    >
+                      Cancel
+                    </button>
+                    <button type="submit" className="px-6 py-3 bg-gray-700 hover:bg-gray-800 hover:bg-opacity-80 shadow rounded text-sm text-white">
+                      Confirmar Cambios
+                    </button>
+                  </div>
                 </form>
-            
+
               </div>
             </div>
           </div>

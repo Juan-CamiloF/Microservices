@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-const ModalAddTask = ({ handleModalAddTask, crearTask }) => {
+const ModalAddTask = ({ handleModalAddTask, crearTask,id,city }) => {
   const [userNewTask, setNewTask] = useState({
     id: "",
     title: "",
@@ -21,7 +22,7 @@ const ModalAddTask = ({ handleModalAddTask, crearTask }) => {
       };
 
       const { data } = await axios.get(
-        `http://localhost:8081/api/v1/state`,
+        `http://localhost:8080/api/v1/${city}/state`,
         config
       );
 
@@ -40,6 +41,21 @@ const ModalAddTask = ({ handleModalAddTask, crearTask }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if([title,description,status].includes("")){
+      toast.error("Todos los campos son obligatorios", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
+
 
     crearTask(userNewTask);
     handleModalAddTask();

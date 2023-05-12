@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 function ModalAddUser({ handleModalAddUser, crearUsuario }) {
   const [userNewUser, setNewUser] = useState({
@@ -18,6 +19,20 @@ function ModalAddUser({ handleModalAddUser, crearUsuario }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if([email,name,lastname].includes("")){
+      toast.error("Todos los campos son obligatorios", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
 
     crearUsuario(userNewUser);
     handleModalAddUser();
