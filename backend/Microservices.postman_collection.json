@@ -81,7 +81,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/bogota/user",
+									"raw": "http://localhost:8080/api/v1/bogota/user?pageNumber=0&pageSize=10",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -92,6 +92,16 @@
 										"v1",
 										"bogota",
 										"user"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
 									]
 								}
 							},
@@ -180,12 +190,12 @@
 							"response": []
 						},
 						{
-							"name": "GET TASK BY USER",
+							"name": "GET TASKS BY USER",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/bogota/task/by-user/1",
+									"raw": "http://localhost:8080/api/v1/bogota/task/by-user/1?pageNumber=0&pageSize=10",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -198,6 +208,16 @@
 										"task",
 										"by-user",
 										"1"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
 									]
 								}
 							},
@@ -387,7 +407,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/medellin/user",
+									"raw": "http://localhost:8080/api/v1/medellin/user?pageNumber=0&pageSize=10",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -398,6 +418,16 @@
 										"v1",
 										"medellin",
 										"user"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
 									]
 								}
 							},
@@ -486,12 +516,12 @@
 							"response": []
 						},
 						{
-							"name": "GET TASK BY USER",
+							"name": "GET TASKS BY USER",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/medellin/task/by-user/1",
+									"raw": "http://localhost:8080/api/v1/medellin/task/by-user/1?pageNumber=0&pageSize=10",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -504,6 +534,16 @@
 										"task",
 										"by-user",
 										"1"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
 									]
 								}
 							},
