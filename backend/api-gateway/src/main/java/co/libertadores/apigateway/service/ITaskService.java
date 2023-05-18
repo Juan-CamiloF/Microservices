@@ -4,6 +4,7 @@ import co.libertadores.apigateway.api.Task;
 import co.libertadores.apigateway.api.request.TaskCreateRequest;
 import co.libertadores.apigateway.api.request.TaskUpdateRequest;
 import co.libertadores.apigateway.api.response.TaskCreateUpdateResponse;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface ITaskService {
 
     Task getTask(Long id);
 
-    List<Task> getTasks(Long userId);
+    Page<Task> getTasks(Long userId, int pageNumber, int pageSize);
 
     TaskCreateUpdateResponse update(Long id, TaskUpdateRequest taskUpdateRequest);
 

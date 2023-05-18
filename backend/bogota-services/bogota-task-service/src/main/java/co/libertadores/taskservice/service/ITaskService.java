@@ -3,14 +3,13 @@ package co.libertadores.taskservice.service;
 import co.libertadores.taskservice.controller.request.TaskCreateRequest;
 import co.libertadores.taskservice.controller.request.TaskUpdateRequest;
 import co.libertadores.taskservice.entity.Task;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface ITaskService {
 
     Task save(TaskCreateRequest taskCreateRequest);
 
-    List<Task> findAllByUserId(Long userId);
+    Page<Task> findAllByUserId(Long userId, int pageNumber, int pageSize);
 
     Task findById(Long id);
 

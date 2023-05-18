@@ -7,11 +7,12 @@ import co.libertadores.userservice.repository.IUserRepository;
 import co.libertadores.userservice.service.IUserService;
 import co.libertadores.userservice.service.exception.UserException;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -43,8 +44,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Page<User> findAll(int pageNumber, int pageSize) {
+        return userRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
     @Override

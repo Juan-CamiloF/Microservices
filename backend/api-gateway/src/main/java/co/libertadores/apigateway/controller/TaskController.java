@@ -8,12 +8,12 @@ import co.libertadores.apigateway.service.ITaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @CrossOrigin(value = "*")
@@ -49,19 +49,23 @@ public class TaskController {
     }
 
     @GetMapping("/bogota/task/by-user/{userId}")
-    public ResponseEntity<List<Task>> getTasksByBogotaUser(@PathVariable Long userId) {
+    public ResponseEntity<Page<Task>> getTasksByBogotaUser(@PathVariable Long userId,
+                                                           @RequestParam("pageNumber") int pageNumber,
+                                                           @RequestParam("pageSize") int pageSize) {
         logger.info("Petición para obtener tareas del microservicio para un usuario de Bogotá");
-        List<Task> list = bogotaTaskService.getTasks(userId);
-        logger.info("Respuesta microservicio: {}", list);
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        Page<Task> page = bogotaTaskService.getTasks(userId, pageNumber, pageSize);
+        logger.info("Respuesta microservicio: {}", page.getNumberOfElements());
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     @GetMapping("/medellin/task/by-user/{userId}")
-    public ResponseEntity<List<Task>> getTasksByMedellinUser(@PathVariable Long userId) {
+    public ResponseEntity<Page<Task>> getTasksByMedellinUser(@PathVariable Long userId,
+                                                             @RequestParam("pageNumber") int pageNumber,
+                                                             @RequestParam("pageSize") int pageSize) {
         logger.info("Petición para obtener tareas del microservicio para un usuario de Medellín");
-        List<Task> list = medellinTaskService.getTasks(userId);
-        logger.info("Respuesta microservicio: {}", list);
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        Page<Task> page = medellinTaskService.getTasks(userId, pageNumber, pageSize);
+        logger.info("Respuesta microservicio: {}", page.getNumberOfElements());
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     @GetMapping("/bogota/task/{id}")

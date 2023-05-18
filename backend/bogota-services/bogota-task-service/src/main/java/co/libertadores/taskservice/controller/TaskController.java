@@ -7,6 +7,7 @@ import co.libertadores.taskservice.entity.Task;
 import co.libertadores.taskservice.service.ITaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,11 +40,11 @@ public class TaskController {
     }
 
     @GetMapping("/by-user/{userId}")
-    public ResponseEntity<List<Task>> listTasksByUserId(@PathVariable Long userId) {
+    public ResponseEntity<Page<Task>> taskPageByUserId(@PathVariable Long userId, @RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
         logger.info("Petición para listar tareas del usuario");
-        List<Task> list = taskService.findAllByUserId(userId);
-        logger.info("{}", list);
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        Page<Task> page = taskService.findAllByUserId(userId, pageNumber, pageSize);
+        logger.info("Cantidad de tareas obtenidas {}", page.getNumberOfElements());
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

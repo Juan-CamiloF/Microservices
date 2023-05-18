@@ -3,13 +3,13 @@ package co.libertadores.userservice.service;
 import co.libertadores.userservice.controller.request.UserCreateRequest;
 import co.libertadores.userservice.controller.request.UserUpdateRequest;
 import co.libertadores.userservice.entity.User;
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface IUserService {
 
     User save(UserCreateRequest userCreateRequest);
 
-    List<User> findAll();
+    Page<User> findAll(int pageNumber, int pageSize);
 
     User findById(Long id);
 

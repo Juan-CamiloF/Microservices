@@ -1,5 +1,6 @@
 package co.libertadores.apigateway.service.impl.medellin;
 
+import co.libertadores.apigateway.api.RestPageImpl;
 import co.libertadores.apigateway.api.User;
 import co.libertadores.apigateway.api.request.UserCreateRequest;
 import co.libertadores.apigateway.api.request.UserUpdateRequest;
@@ -9,6 +10,7 @@ import co.libertadores.apigateway.service.exception.MicroserviceException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,8 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
 
 @Service
 @Qualifier("medellin")
@@ -42,9 +44,12 @@ public class MedellinUserServiceImpl implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> findAll() {
+    public Page<User> findAll(int pageNumber, int pageSize) {
         try {
-            return restTemplate.exchange(medellinUserService, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(medellinUserService)
+                    .queryParam("pageNumber", pageNumber)
+                    .queryParam("pageSize", pageSize);
+            return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<RestPageImpl<User>>() {
             }).getBody();
         } catch (Exception e) {
             throw new MicroserviceException(e.getMessage().substring(7, e.getMessage().length() - 1));

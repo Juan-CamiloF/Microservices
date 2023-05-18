@@ -9,6 +9,7 @@ import co.libertadores.apigateway.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,23 +57,23 @@ public class UserController {
     }
 
     @GetMapping("/bogota/user")
-    public ResponseEntity<List<User>> userListBogota() {
+    public ResponseEntity<Page<User>> userPageBogota(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
         logger.info("Petición para listar los usuarios de Bogotá");
-        List<User> list = bogotaUserService.findAll();
-        logger.info("Cantidad de usuarios obtenidos {}", list.size());
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        Page<User> page = bogotaUserService.findAll(pageNumber, pageSize);
+        logger.info("Respuesta microservicio: {}", page.getNumberOfElements());
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     @GetMapping("/medellin/user")
-    public ResponseEntity<List<User>> userListMedellin() {
+    public ResponseEntity<Page<User>> userPageMedellin(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
         logger.info("Petición para listar los usuarios de Medellín");
-        List<User> list = medellinUserService.findAll();
-        logger.info("Cantidad de usuarios obtenidos {}", list.size());
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        Page<User> page = medellinUserService.findAll(pageNumber, pageSize);
+        logger.info("Respuesta microservicio: {}", page.getNumberOfElements());
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     @GetMapping("/bogota/user/{id}")
-    public ResponseEntity<User> getBogotaUser(@PathVariable Long id) {
+    public ResponseEntity<User> getUserInBogota(@PathVariable Long id) {
         logger.info("Petición para obtener un usuario de Bogotá por id {}", id);
         User user = bogotaUserService.findById(id);
         logger.info("Usuario obtenido: {}", user);
@@ -80,7 +81,7 @@ public class UserController {
     }
 
     @GetMapping("/medellin/user/{id}")
-    public ResponseEntity<User> getMedellinUser(@PathVariable Long id) {
+    public ResponseEntity<User> getUserInMedellin(@PathVariable Long id) {
         logger.info("Petición para obtener un usuario de Medellín por id {}", id);
         User user = medellinUserService.findById(id);
         logger.info("Usuario obtenido: {}", user);

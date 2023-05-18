@@ -1,5 +1,6 @@
 package co.libertadores.apigateway.service.impl.medellin;
 
+import co.libertadores.apigateway.api.RestPageImpl;
 import co.libertadores.apigateway.api.Task;
 import co.libertadores.apigateway.api.request.TaskCreateRequest;
 import co.libertadores.apigateway.api.request.TaskUpdateRequest;
@@ -11,12 +12,14 @@ import co.libertadores.apigateway.service.exception.UserException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -50,10 +53,13 @@ public class MedellinTaskServiceImpl implements ITaskService {
     }
 
     @Override
-    public List<Task> getTasks(Long userId) {
+    public Page<Task> getTasks(Long userId, int pageNumber, int pageSize) {
         String url = taskService + "by-user/" + userId;
         try {
-            return restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Task>>() {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url)
+                    .queryParam("pageNumber", pageNumber)
+                    .queryParam("pageSize", pageSize);
+            return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, new ParameterizedTypeReference<RestPageImpl<Task>>() {
             }).getBody();
         } catch (Exception e) {
             throw new MicroserviceException(e.getMessage().substring(7, e.getMessage().length() - 1));

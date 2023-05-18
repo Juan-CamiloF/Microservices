@@ -7,6 +7,7 @@ import co.libertadores.userservice.entity.User;
 import co.libertadores.userservice.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,11 +42,12 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> listUsers() {
+    public ResponseEntity<Page<User>> usersPage(@RequestParam("pageNumber") int pageNumber,
+                                                @RequestParam("pageSize") int pageSize) {
         logger.info("Petición para listar los usuarios");
-        List<User> list = userService.findAll();
-        logger.info("Cantidad de usuarios obtenidos {}", list.size());
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        Page<User> page = userService.findAll(pageNumber, pageSize);
+        logger.info("Cantidad de usuarios obtenidos {}", page.getNumberOfElements());
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

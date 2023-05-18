@@ -7,10 +7,10 @@ import co.libertadores.taskservice.repository.ITaskRepository;
 import co.libertadores.taskservice.service.ITaskService;
 import co.libertadores.taskservice.service.exception.TaskException;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class TaskServiceImpl implements ITaskService {
@@ -36,8 +36,8 @@ public class TaskServiceImpl implements ITaskService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Task> findAllByUserId(Long userId) {
-        return taskRepository.findByUserId(userId);
+    public Page<Task> findAllByUserId(Long userId, int pageNumber, int pageSize) {
+        return taskRepository.findByUserId(userId, PageRequest.of(pageNumber, pageSize));
     }
 
     @Override
