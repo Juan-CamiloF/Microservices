@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @CrossOrigin(value = "*")
@@ -27,17 +26,23 @@ public class UserController {
     private final IUserService bogotaUserService;
 
     private final IUserService medellinUserService;
+    private final IUserService caliUserService;
 
     private final ITaskService bogotaTaskService;
 
     private final ITaskService medellinTaskService;
 
+    private final ITaskService caliTaskService;
+
     public UserController(@Qualifier("bogota") IUserService bogotaUserService, @Qualifier("bogota") ITaskService bogotaTaskService,
-                          @Qualifier("medellin") IUserService medellinUserService, @Qualifier("medellin") ITaskService medellinTaskService) {
+                          @Qualifier("medellin") IUserService medellinUserService, @Qualifier("medellin") ITaskService medellinTaskService,
+                          @Qualifier("cali") IUserService caliUserService, @Qualifier("cali") ITaskService caliTaskService) {
         this.bogotaUserService = bogotaUserService;
         this.medellinUserService = medellinUserService;
+        this.caliUserService = caliUserService;
         this.bogotaTaskService = bogotaTaskService;
         this.medellinTaskService = medellinTaskService;
+        this.caliTaskService = caliTaskService;
     }
 
     @PostMapping("/bogota/user")
@@ -52,6 +57,14 @@ public class UserController {
     public ResponseEntity<UserCreateUpdateResponse> createUserMedellin(@Valid @RequestBody UserCreateRequest userCreateRequest) {
         logger.info("Petición para crear usuario en Medellín con el microservicio");
         UserCreateUpdateResponse userCreateUpdateResponse = medellinUserService.save(userCreateRequest);
+        logger.info("Respuesta microservicio: {}", userCreateUpdateResponse);
+        return new ResponseEntity<>(userCreateUpdateResponse, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/cali/user")
+    public ResponseEntity<UserCreateUpdateResponse> createUserCali(@Valid @RequestBody UserCreateRequest userCreateRequest) {
+        logger.info("Petición para crear usuario en Cali con el microservicio");
+        UserCreateUpdateResponse userCreateUpdateResponse = caliUserService.save(userCreateRequest);
         logger.info("Respuesta microservicio: {}", userCreateUpdateResponse);
         return new ResponseEntity<>(userCreateUpdateResponse, HttpStatus.CREATED);
     }
@@ -72,6 +85,14 @@ public class UserController {
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
+    @GetMapping("/cali/user")
+    public ResponseEntity<Page<User>> userPageCali(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
+        logger.info("Petición para listar los usuarios de Cali");
+        Page<User> page = caliUserService.findAll(pageNumber, pageSize);
+        logger.info("Respuesta microservicio: {}", page.getNumberOfElements());
+        return new ResponseEntity<>(page, HttpStatus.OK);
+    }
+
     @GetMapping("/bogota/user/{id}")
     public ResponseEntity<User> getUserInBogota(@PathVariable Long id) {
         logger.info("Petición para obtener un usuario de Bogotá por id {}", id);
@@ -84,6 +105,14 @@ public class UserController {
     public ResponseEntity<User> getUserInMedellin(@PathVariable Long id) {
         logger.info("Petición para obtener un usuario de Medellín por id {}", id);
         User user = medellinUserService.findById(id);
+        logger.info("Usuario obtenido: {}", user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/cali/user/{id}")
+    public ResponseEntity<User> getUserInCali(@PathVariable Long id) {
+        logger.info("Petición para obtener un usuario de Cali por id {}", id);
+        User user = caliUserService.findById(id);
         logger.info("Usuario obtenido: {}", user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -104,6 +133,14 @@ public class UserController {
         return new ResponseEntity<>(userCreateUpdateResponse, HttpStatus.CREATED);
     }
 
+    @PutMapping("/cali/user/{id}")
+    public ResponseEntity<UserCreateUpdateResponse> updateUserCali(@PathVariable Long id, @RequestBody @Valid UserUpdateRequest userUpdateRequest) {
+        logger.info("Petición para actualizar un usuario de Cali con el microservicio");
+        UserCreateUpdateResponse userCreateUpdateResponse = caliUserService.update(id, userUpdateRequest);
+        logger.info("Respuesta microservicio: {}", userCreateUpdateResponse);
+        return new ResponseEntity<>(userCreateUpdateResponse, HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/bogota/user/{id}")
     public ResponseEntity<Void> deleteUserBogota(@PathVariable Long id) {
         logger.info("Petición para eliminar un usuario de Bogotá por id {}", id);
@@ -120,6 +157,16 @@ public class UserController {
         medellinTaskService.deleteByUserId(id);
         logger.info("Tareas del usuario eliminadas");
         medellinUserService.delete(id);
+        logger.info("Usuario eliminado");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/cali/user/{id}")
+    public ResponseEntity<Void> deleteUserCali(@PathVariable Long id) {
+        logger.info("Petición para eliminar un usuario de Cali por id {}", id);
+        caliTaskService.deleteByUserId(id);
+        logger.info("Tareas del usuario eliminadas");
+        caliUserService.delete(id);
         logger.info("Usuario eliminado");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

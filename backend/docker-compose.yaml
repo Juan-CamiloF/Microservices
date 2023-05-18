@@ -68,6 +68,40 @@ services:
       - config.env
     volumes:
       - .:/app
+  # Servicios para Cali
+  cali-user:
+    image: "cali-user:1"
+    build: cali-services/cali-user-service/
+    ports:
+      - "8087:8087"
+    depends_on:
+      - db-cali
+    env_file:
+      - config.env
+    volumes:
+      - .:/app
+  cali-task:
+    image: "cali-task:1"
+    build: cali-services/cali-task-service/
+    ports:
+      - "8088:8088"
+    depends_on:
+      - db-cali
+    env_file:
+      - config.env
+    volumes:
+      - .:/app
+  cali-state:
+    image: "cali-state:1"
+    build: cali-services/cali-state-service/
+    ports:
+      - "8089:8089"
+    depends_on:
+      - db-cali
+    env_file:
+      - config.env
+    volumes:
+      - .:/app
   # DB Bogotá
   db-bogota:
     image: postgres:latest
@@ -92,6 +126,18 @@ services:
       - "5434:5432"
     volumes:
       - ./sql:/docker-entrypoint-initdb.d/
+  db-cali:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db-cali
+    ports:
+    - "5435:5432"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+  # API
   api:
     image: "api-gateway:1"
     build: api-gateway

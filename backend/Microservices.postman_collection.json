@@ -555,15 +555,16 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/task/1",
+									"raw": "http://localhost:8080/api/v1/medellin/task/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8081",
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
+										"medellin",
 										"task",
 										"1"
 									]
@@ -577,15 +578,16 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8081/api/v1/task/1",
+									"raw": "http://localhost:80810/api/v1/medellin/task/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8081",
+									"port": "80810",
 									"path": [
 										"api",
 										"v1",
+										"medellin",
 										"task",
 										"1"
 									]
@@ -608,7 +610,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8081/api/v1/task/1",
+									"raw": "http://localhost:8081/api/v1/medellin/task/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -617,6 +619,7 @@
 									"path": [
 										"api",
 										"v1",
+										"medellin",
 										"task",
 										"1"
 									]
@@ -645,6 +648,332 @@
 										"api",
 										"v1",
 										"medellin",
+										"state"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CALI",
+			"item": [
+				{
+					"name": "USER",
+					"item": [
+						{
+							"name": "CREATE USER",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Fandiño\",\n    \"email\": \"juan@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE USER",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Fandiño Benavides\",\n    \"email\": \"jcfandinob@libertadores.edu.co\",\n    \"createdAt\": \"2023-01-01\",\n    \"updatedAt\": \"2023-01-01\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET USERS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/user?pageNumber=0&pageSize=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
+										"user"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET USER",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE USER",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TASK",
+					"item": [
+						{
+							"name": "CREATE TASK",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"titulo\",\n    \"description\": \"pablo\",\n    \"status\": \"hecho\",\n    \"userId\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/task",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
+										"task"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET TASKS BY USER",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/task/by-user/2?pageNumber=0&pageSize=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
+										"task",
+										"by-user",
+										"2"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET TASK",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/task/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
+										"task",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE TASK",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/task/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
+										"task",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE TASK",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 2,\n    \"title\": \"titulo aaaa\",\n    \"description\": \"pablo\",\n    \"status\": \"hecho\",\n    \"userId\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/task/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
+										"task",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "STATE",
+					"item": [
+						{
+							"name": "GET STATES",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cali/state",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cali",
 										"state"
 									]
 								}

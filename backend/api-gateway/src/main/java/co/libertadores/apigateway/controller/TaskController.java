@@ -26,9 +26,14 @@ public class TaskController {
 
     private final ITaskService medellinTaskService;
 
-    public TaskController(@Qualifier("bogota") ITaskService bogotaTaskService, @Qualifier("medellin") ITaskService medellinTaskService) {
+    private final ITaskService caliTaskService;
+
+    public TaskController(@Qualifier("bogota") ITaskService bogotaTaskService,
+                          @Qualifier("medellin") ITaskService medellinTaskService,
+                          @Qualifier("cali") ITaskService caliTaskService) {
         this.bogotaTaskService = bogotaTaskService;
         this.medellinTaskService = medellinTaskService;
+        this.caliTaskService = caliTaskService;
     }
 
 
@@ -44,6 +49,14 @@ public class TaskController {
     public ResponseEntity<TaskCreateUpdateResponse> createTaskForMedellinUser(@RequestBody @Valid TaskCreateRequest taskCreateRequest) {
         logger.info("Petición para crear tareas en Medellín con el microservicio");
         TaskCreateUpdateResponse taskCreateUpdateResponse = medellinTaskService.save(taskCreateRequest);
+        logger.info("Respuesta microservicio: {}", taskCreateUpdateResponse);
+        return new ResponseEntity<>(taskCreateUpdateResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/cali/task")
+    public ResponseEntity<TaskCreateUpdateResponse> createTaskForCaliUser(@RequestBody @Valid TaskCreateRequest taskCreateRequest) {
+        logger.info("Petición para crear tareas en Cali con el microservicio");
+        TaskCreateUpdateResponse taskCreateUpdateResponse = caliTaskService.save(taskCreateRequest);
         logger.info("Respuesta microservicio: {}", taskCreateUpdateResponse);
         return new ResponseEntity<>(taskCreateUpdateResponse, HttpStatus.OK);
     }
@@ -68,6 +81,16 @@ public class TaskController {
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
+    @GetMapping("/cali/task/by-user/{userId}")
+    public ResponseEntity<Page<Task>> getTasksByCaliUser(@PathVariable Long userId,
+                                                             @RequestParam("pageNumber") int pageNumber,
+                                                             @RequestParam("pageSize") int pageSize) {
+        logger.info("Petición para obtener tareas del microservicio para un usuario de Cali");
+        Page<Task> page = caliTaskService.getTasks(userId, pageNumber, pageSize);
+        logger.info("Respuesta microservicio: {}", page.getNumberOfElements());
+        return new ResponseEntity<>(page, HttpStatus.OK);
+    }
+
     @GetMapping("/bogota/task/{id}")
     public ResponseEntity<Task> getTaskInBogota(@PathVariable Long id) {
         logger.info("Petición para obtener una tarea de Bogotá con el microservicio");
@@ -84,6 +107,14 @@ public class TaskController {
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
+    @GetMapping("/cali/task/{id}")
+    public ResponseEntity<Task> getTaskInCali(@PathVariable Long id) {
+        logger.info("Petición para obtener una tarea de Cali con el microservicio");
+        Task task = caliTaskService.getTask(id);
+        logger.info("Respuesta microservicio: {}", task);
+        return new ResponseEntity<>(task, HttpStatus.OK);
+    }
+
     @PutMapping("/bogota/task/{id}")
     public ResponseEntity<TaskCreateUpdateResponse> updateTaskInBogota(@PathVariable Long id, @RequestBody TaskUpdateRequest taskUpdateRequest) {
         logger.info("Petición para actualizar una tarea de Bogotá con el microservicio");
@@ -95,7 +126,15 @@ public class TaskController {
     @PutMapping("/medellin/task/{id}")
     public ResponseEntity<TaskCreateUpdateResponse> updateTaskInMedellin(@PathVariable Long id, @RequestBody TaskUpdateRequest taskUpdateRequest) {
         logger.info("Petición para actualizar una tarea de Medellín con el microservicio");
-        TaskCreateUpdateResponse taskCreateUpdateResponse = bogotaTaskService.update(id, taskUpdateRequest);
+        TaskCreateUpdateResponse taskCreateUpdateResponse = medellinTaskService.update(id, taskUpdateRequest);
+        logger.info("Respuesta microservicio: {}", taskCreateUpdateResponse);
+        return new ResponseEntity<>(taskCreateUpdateResponse, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/cali/task/{id}")
+    public ResponseEntity<TaskCreateUpdateResponse> updateTaskInCali(@PathVariable Long id, @RequestBody TaskUpdateRequest taskUpdateRequest) {
+        logger.info("Petición para actualizar una tarea de Cali con el microservicio");
+        TaskCreateUpdateResponse taskCreateUpdateResponse = caliTaskService.update(id, taskUpdateRequest);
         logger.info("Respuesta microservicio: {}", taskCreateUpdateResponse);
         return new ResponseEntity<>(taskCreateUpdateResponse, HttpStatus.CREATED);
     }
@@ -111,7 +150,15 @@ public class TaskController {
     @DeleteMapping("/medellin/task/{id}")
     public ResponseEntity<Void> deleteTaskInMedellin(@PathVariable Long id) {
         logger.info("Petición para eliminar una tarea de Medellín con el microservicio");
-        bogotaTaskService.delete(id);
+        medellinTaskService.delete(id);
+        logger.info("El microservicio elimino la tarea");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/cali/task/{id}")
+    public ResponseEntity<Void> deleteTaskInCali(@PathVariable Long id) {
+        logger.info("Petición para eliminar una tarea de Cali con el microservicio");
+        caliTaskService.delete(id);
         logger.info("El microservicio elimino la tarea");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

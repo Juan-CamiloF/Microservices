@@ -25,9 +25,14 @@ public class StateController {
 
     private final IStateService medellinStateService;
 
-    public StateController(@Qualifier("bogota") IStateService bogotaStateService, @Qualifier("medellin") IStateService medellinStateService) {
+    private final IStateService caliStateService;
+
+    public StateController(@Qualifier("bogota") IStateService bogotaStateService,
+                           @Qualifier("medellin") IStateService medellinStateService,
+                           @Qualifier("cali") IStateService caliStateService) {
         this.bogotaStateService = bogotaStateService;
         this.medellinStateService = medellinStateService;
+        this.caliStateService = caliStateService;
     }
 
     @GetMapping("/bogota/state")
@@ -42,6 +47,14 @@ public class StateController {
     public ResponseEntity<List<State>> listMedellinStates() {
         logger.info("Petición para obtener estados de Medellín con el microservicio");
         List<State> list = medellinStateService.getStates();
+        logger.info("Respuesta del microservicio: {}", list);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/cali/state")
+    public ResponseEntity<List<State>> listCaliStates() {
+        logger.info("Petición para obtener estados de Cali con el microservicio");
+        List<State> list = caliStateService.getStates();
         logger.info("Respuesta del microservicio: {}", list);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
