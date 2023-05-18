@@ -11,7 +11,11 @@ import axios from "axios";
 const Profile = () => {
   const navigate = useNavigate();
 
-  const { id } = useParams();
+  const querystring = window.location.search
+  const params = new URLSearchParams(querystring)
+
+  let id = params.get('id') 
+  let city = params.get('ciudad') 
 
   const [user, setUser] = useState({
     name: "",
@@ -26,13 +30,14 @@ const Profile = () => {
       };
       try {
         const { data } = await axios.get(
-          `http://localhost:8081/api/v1/user/${id}`,
+          `http://localhost:8080/api/v1/${city}/user/${id}`,
           config
         );
 
         setUser(data);
       } catch (err) {
-        navigate("/");
+      
+    navigate("/dashboard");
       }
     };
 
@@ -45,7 +50,7 @@ const Profile = () => {
       "Access-Control-Allow-Origin": "*",
     };
 
-    await axios.delete(`http://localhost:8081/api/v1/user/${id}`, config);
+    await axios.delete(`http://localhost:8080/api/v1/${city}/user/${id}`, config);
 
     toast.success("Usuario eliminado correctamente", {
       position: "top-right",
@@ -58,7 +63,7 @@ const Profile = () => {
       theme: "light",
     });
 
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return (
@@ -102,7 +107,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <TableTasks />
+      <TableTasks city={city} id={id}  />
     </>
   );
 };

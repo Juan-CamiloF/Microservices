@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useDarkSide from "../hooks/useDarkSite";
 import Header from "./Header";
@@ -9,6 +9,15 @@ import ModalAddUser from "./ModalAddUser";
 import ModalEditUser from "./ModalEditUser";
 
 function TableUsers() {
+
+  const { city } = useParams()
+
+  const [ciudad, setCiudad] = useState(city)
+
+  useEffect(() => {
+    setCiudad(city)
+  }, [city])
+
   const [show, setShow] = useState(null);
 
   const [modal, setModal] = useState(false);
@@ -40,14 +49,14 @@ function TableUsers() {
       };
 
       const { data } = await axios.get(
-        "http://localhost:8081/api/v1/user",
+        `http://localhost:8080/api/v1/${ciudad}/user`,
         config
       );
 
       setUsers([...data]);
     };
     getUsers();
-  }, []);
+  }, [ciudad]);
 
   const editarUsuario = async (updateUser) => {
     const config = {
@@ -56,7 +65,7 @@ function TableUsers() {
     };
 
     await axios.put(
-      `http://localhost:8081/api/v1/user/${updateUser.id}`,
+      `http://localhost:8080/api/v1/${ciudad}/user/${updateUser.id}`,
       updateUser,
       config
     );
@@ -86,7 +95,7 @@ function TableUsers() {
       "Access-Control-Allow-Origin": "*",
     };
 
-    await axios.delete(`http://localhost:8081/api/v1/user/${id}`, config);
+    await axios.delete(`http://localhost:8080/api/v1/${ciudad}/user/${id}`, config);
 
     toast.success("Usuario eliminado correctamente", {
       position: "top-right",
@@ -111,7 +120,7 @@ function TableUsers() {
     };
 
     const { data } = await axios.post(
-      `http://localhost:8081/api/v1/user`,
+      `http://localhost:8080/api/v1/${ciudad}/user`,
       newUser,
       config
     );
@@ -272,7 +281,7 @@ function TableUsers() {
                     )}
                     {show == index && (
                       <div className="dropdown-content bg-white dark:bg-gray-600 shadow w-24 absolute z-30 right-0 mr-36 ">
-                        <Link to={`/perfil/${user.id}`}>
+                        <Link to={`/dashboard/perfil?id=${user.id}&ciudad=${city}`}>
                           <div className="text-xs w-full hover:bg-slate-500 py-4 px-4 cursor-pointer hover:text-white  dark:hover:text-white">
                             <p>Ver perfil</p>
                           </div>

@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-const ModalEditTask = ({ userEdit, handleModalEdit, editarUsuario }) => {
+const ModalEditTask = ({ userEdit, handleModalEdit, editarUsuario,city,id }) => {
   const [userUpdate, setUserUpdate] = useState(userEdit);
   const [statusAPI, setStatusAPI] = useState([]);
 
@@ -15,7 +16,7 @@ const ModalEditTask = ({ userEdit, handleModalEdit, editarUsuario }) => {
       };
 
       const { data } = await axios.get(
-        `http://localhost:8081/api/v1/state`,
+        `http://localhost:8080/api/v1/${city}/state`,
         config
       );
 
@@ -33,6 +34,22 @@ const ModalEditTask = ({ userEdit, handleModalEdit, editarUsuario }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if([title,description,status].includes("")){
+      toast.error("Todos los campos son obligatorios", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
+
+
     editarUsuario(userUpdate);
     handleModalEdit();
   };
