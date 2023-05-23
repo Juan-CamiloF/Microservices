@@ -113,7 +113,8 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - ./sql:/docker-entrypoint-initdb.d/
+      - ./sql/create-tables.sql:/docker-entrypoint-initdb.d/create-tables.sql
+      - ./sql/data-bogota.sql:/docker-entrypoint-initdb.d/data-bogota.sql
   # DB Bogotá
   db-medellin:
     image: postgres:latest
@@ -125,7 +126,8 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - ./sql:/docker-entrypoint-initdb.d/
+      - ./sql/create-tables.sql:/docker-entrypoint-initdb.d/create-tables.sql
+      - ./sql/data-medellin.sql:/docker-entrypoint-initdb.d/data-medellin.sql
   db-cali:
     image: postgres:latest
     restart: always
@@ -134,9 +136,11 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: db-cali
     ports:
-    - "5435:5432"
+      - "5435:5432"
     volumes:
-      - ./sql:/docker-entrypoint-initdb.d/
+      - ./sql/create-tables.sql:/docker-entrypoint-initdb.d/create-tables.sql
+      - ./sql/data-cali.sql:/docker-entrypoint-initdb.d/data-cali.sql
+
   # API
   api:
     image: "api-gateway:1"

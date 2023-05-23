@@ -1,7 +1,12 @@
 package co.libertadores.apigateway.api.request;
 
+import co.libertadores.apigateway.api.Role;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class UserCreateRequest {
@@ -15,6 +20,12 @@ public class UserCreateRequest {
     @NotBlank
     @Email
     private String email;
+
+    @NotBlank
+    private String password;
+
+    @NotNull
+    private Set<Role> roles = new HashSet<>();
 
     public String getName() {
         return name;
@@ -40,8 +51,30 @@ public class UserCreateRequest {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
-        return "{" + "name='" + name + '\'' + ", lastname='" + lastname + '\'' + ", email='" + email + '\'' + '}';
+        return "{" +
+                "name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

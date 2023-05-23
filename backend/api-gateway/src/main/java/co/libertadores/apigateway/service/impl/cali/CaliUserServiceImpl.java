@@ -16,24 +16,26 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 
 @Service
 @Qualifier("cali")
 public class CaliUserServiceImpl implements IUserService {
     private final String caliUserService;
+
     private final RestTemplate restTemplate;
 
-    public CaliUserServiceImpl(@Value("${cali.user.service.url}") String caliUserService, RestTemplate restTemplate) {
+    public CaliUserServiceImpl(@Value("${cali.user.service.url}") String caliUserService,
+                               RestTemplate restTemplate) {
         this.caliUserService = caliUserService;
         this.restTemplate = restTemplate;
     }
 
     @Override
-    @Transactional
     public UserCreateUpdateResponse save(UserCreateRequest userCreateRequest) {
         try {
             return restTemplate.postForObject(caliUserService, userCreateRequest, UserCreateUpdateResponse.class);
@@ -43,7 +45,6 @@ public class CaliUserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Page<User> findAll(int pageNumber, int pageSize) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(caliUserService)
@@ -57,7 +58,13 @@ public class CaliUserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    public List<User> findAllInAList() {
+        String url = caliUserService + "/list";
+        return restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
+        }).getBody();
+    }
+
+    @Override
     public User findById(Long id) {
         String url = caliUserService + id;
         try {
@@ -68,7 +75,16 @@ public class CaliUserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
+    public User findByEmail(String email) {
+        String url = caliUserService + "email/" + email;
+        try {
+            return restTemplate.getForObject(url, User.class);
+        } catch (Exception e) {
+            throw new MicroserviceException(e.getMessage().substring(7, e.getMessage().length() - 1));
+        }
+    }
+
+    @Override
     public UserCreateUpdateResponse update(Long id, UserUpdateRequest userUpdateRequest) {
         String url = caliUserService + id;
 
@@ -83,7 +99,6 @@ public class CaliUserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         String url = caliUserService + id;
         try {
@@ -101,6 +116,16 @@ public class CaliUserServiceImpl implements IUserService {
             return false;
         } catch (Exception e) {
             return true;
+        }
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        String url = caliUserService + "email-exists/" + email;
+        try {
+            return Boolean.TRUE.equals(restTemplate.getForObject(url, Boolean.class));
+        } catch (Exception e) {
+            return false;
         }
     }
 

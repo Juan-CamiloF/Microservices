@@ -1,6 +1,9 @@
 package co.libertadores.apigateway.api;
 
+
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class User {
     private Long id;
@@ -11,9 +14,14 @@ public class User {
 
     private String email;
 
+    private String password;
+
     private LocalDate createdAt;
 
     private LocalDate updatedAt;
+
+    private Set<Role> roles = new HashSet<>();
+
 
     public Long getId() {
         return id;
@@ -47,6 +55,14 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public LocalDate getCreatedAt() {
         return createdAt;
     }
@@ -61,6 +77,14 @@ public class User {
 
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

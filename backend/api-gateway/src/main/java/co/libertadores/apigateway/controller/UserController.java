@@ -1,5 +1,6 @@
 package co.libertadores.apigateway.controller;
 
+import co.libertadores.apigateway.api.Role;
 import co.libertadores.apigateway.api.User;
 import co.libertadores.apigateway.api.request.UserCreateRequest;
 import co.libertadores.apigateway.api.request.UserUpdateRequest;
@@ -12,12 +13,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
-@CrossOrigin(value = "*")
 @RequestMapping("/api/v1")
 public class UserController {
 
@@ -26,6 +30,7 @@ public class UserController {
     private final IUserService bogotaUserService;
 
     private final IUserService medellinUserService;
+
     private final IUserService caliUserService;
 
     private final ITaskService bogotaTaskService;
@@ -34,20 +39,38 @@ public class UserController {
 
     private final ITaskService caliTaskService;
 
+    private final PasswordEncoder passwordEncoder;
+
     public UserController(@Qualifier("bogota") IUserService bogotaUserService, @Qualifier("bogota") ITaskService bogotaTaskService,
                           @Qualifier("medellin") IUserService medellinUserService, @Qualifier("medellin") ITaskService medellinTaskService,
-                          @Qualifier("cali") IUserService caliUserService, @Qualifier("cali") ITaskService caliTaskService) {
+                          @Qualifier("cali") IUserService caliUserService, @Qualifier("cali") ITaskService caliTaskService,
+                          PasswordEncoder passwordEncoder) {
         this.bogotaUserService = bogotaUserService;
         this.medellinUserService = medellinUserService;
         this.caliUserService = caliUserService;
         this.bogotaTaskService = bogotaTaskService;
         this.medellinTaskService = medellinTaskService;
         this.caliTaskService = caliTaskService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getAllUsers() {
+        logger.info("Peticiones para obtener todos los usuarios");
+        List<User> bogotaUserList = bogotaUserService.findAllInAList();
+        List<User> caliUserList = caliUserService.findAllInAList();
+        List<User> medellinUserList = medellinUserService.findAllInAList();
+        List<User> result = new ArrayList<>();
+        result.addAll(bogotaUserList);
+        result.addAll(caliUserList);
+        result.addAll(medellinUserList);
+        return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
     @PostMapping("/bogota/user")
     public ResponseEntity<UserCreateUpdateResponse> createUserBogota(@Valid @RequestBody UserCreateRequest userCreateRequest) {
         logger.info("Petición para crear usuario en Bogotá con el microservicio");
+        userCreateRequest.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
         UserCreateUpdateResponse userCreateUpdateResponse = bogotaUserService.save(userCreateRequest);
         logger.info("Respuesta microservicio: {}", userCreateUpdateResponse);
         return new ResponseEntity<>(userCreateUpdateResponse, HttpStatus.CREATED);
@@ -56,6 +79,7 @@ public class UserController {
     @PostMapping("/medellin/user")
     public ResponseEntity<UserCreateUpdateResponse> createUserMedellin(@Valid @RequestBody UserCreateRequest userCreateRequest) {
         logger.info("Petición para crear usuario en Medellín con el microservicio");
+        userCreateRequest.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
         UserCreateUpdateResponse userCreateUpdateResponse = medellinUserService.save(userCreateRequest);
         logger.info("Respuesta microservicio: {}", userCreateUpdateResponse);
         return new ResponseEntity<>(userCreateUpdateResponse, HttpStatus.CREATED);
@@ -64,6 +88,7 @@ public class UserController {
     @PostMapping("/cali/user")
     public ResponseEntity<UserCreateUpdateResponse> createUserCali(@Valid @RequestBody UserCreateRequest userCreateRequest) {
         logger.info("Petición para crear usuario en Cali con el microservicio");
+        userCreateRequest.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
         UserCreateUpdateResponse userCreateUpdateResponse = caliUserService.save(userCreateRequest);
         logger.info("Respuesta microservicio: {}", userCreateUpdateResponse);
         return new ResponseEntity<>(userCreateUpdateResponse, HttpStatus.CREATED);

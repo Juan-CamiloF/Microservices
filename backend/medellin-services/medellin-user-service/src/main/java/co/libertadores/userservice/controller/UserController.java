@@ -44,16 +44,40 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Page<User>> usersPage(@RequestParam("pageNumber") int pageNumber,
                                                 @RequestParam("pageSize") int pageSize) {
-        logger.info("Petición para listar los usuarios");
+        logger.info("Petición para paginar los usuarios");
         Page<User> page = userService.findAll(pageNumber, pageSize);
         logger.info("Cantidad de usuarios obtenidos {}", page.getNumberOfElements());
         return new ResponseEntity<>(page, HttpStatus.OK);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<User>> userList() {
+        logger.info("Petición para listar los usuarios");
+        List<User> list = userService.findAllInAList();
+        logger.info("Cantidad de usuarios obtenidos {}", list.size());
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
         logger.info("Petición para obtener un usuario por id {}", id);
         User user = userService.findById(id);
+        logger.info("Usuario obtenido: {}", user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("email-exists/{email}")
+    public ResponseEntity<Boolean> existsUserByEmail(@PathVariable String email) {
+        logger.info("Petición para validar si existe el usuario por email {}", email);
+        Boolean exists = userService.existsByEmail(email);
+        logger.info("El usuario existe {}", exists);
+        return new ResponseEntity<>(exists, HttpStatus.OK);
+    }
+
+    @GetMapping("email/{email}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+        logger.info("Petición para obtener un usuario por correo {}", email);
+        User user = userService.findByEmail(email);
         logger.info("Usuario obtenido: {}", user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

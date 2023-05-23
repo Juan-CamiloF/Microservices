@@ -1,8 +1,12 @@
 package co.libertadores.userservice.controller.request;
 
+import co.libertadores.userservice.entity.Role;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserUpdateRequest {
 
@@ -17,6 +21,9 @@ public class UserUpdateRequest {
 
     @NotBlank
     private String email;
+
+    @NotNull
+    private Set<Role> roles = new HashSet<>();
 
     @NotNull
     private LocalDate createdAt;
@@ -48,6 +55,22 @@ public class UserUpdateRequest {
         this.lastname = lastname;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public LocalDate getCreatedAt() {
         return createdAt;
     }
@@ -64,11 +87,16 @@ public class UserUpdateRequest {
         this.updatedAt = updatedAt;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }

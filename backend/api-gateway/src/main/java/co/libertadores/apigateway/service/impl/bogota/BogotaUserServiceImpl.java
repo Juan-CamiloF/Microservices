@@ -13,23 +13,26 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
+
 
 @Service
 @Qualifier("bogota")
 public class BogotaUserServiceImpl implements IUserService {
     private final String bogotaUserService;
+
     private final RestTemplate restTemplate;
 
-    public BogotaUserServiceImpl(@Value("${bogota.user.service.url}") String bogotaUserService, RestTemplate restTemplate) {
+    public BogotaUserServiceImpl(@Value("${bogota.user.service.url}") String bogotaUserService,
+                                 RestTemplate restTemplate) {
         this.bogotaUserService = bogotaUserService;
         this.restTemplate = restTemplate;
     }
 
     @Override
-    @Transactional
     public UserCreateUpdateResponse save(UserCreateRequest userCreateRequest) {
         try {
             return restTemplate.postForObject(bogotaUserService, userCreateRequest, UserCreateUpdateResponse.class);
@@ -39,7 +42,6 @@ public class BogotaUserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Page<User> findAll(int pageNumber, int pageSize) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(bogotaUserService)
@@ -53,7 +55,13 @@ public class BogotaUserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    public List<User> findAllInAList() {
+        String url = bogotaUserService + "/list";
+        return restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<User>>() {
+        }).getBody();
+    }
+
+    @Override
     public User findById(Long id) {
         String url = bogotaUserService + id;
         try {
@@ -64,7 +72,16 @@ public class BogotaUserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
+    public User findByEmail(String email) {
+        String url = bogotaUserService + "email/" + email;
+        try {
+            return restTemplate.getForObject(url, User.class);
+        } catch (Exception e) {
+            throw new MicroserviceException(e.getMessage().substring(7, e.getMessage().length() - 1));
+        }
+    }
+
+    @Override
     public UserCreateUpdateResponse update(Long id, UserUpdateRequest userUpdateRequest) {
         String url = bogotaUserService + id;
 
@@ -79,7 +96,6 @@ public class BogotaUserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         String url = bogotaUserService + id;
         try {
@@ -97,6 +113,16 @@ public class BogotaUserServiceImpl implements IUserService {
             return false;
         } catch (Exception e) {
             return true;
+        }
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        String url = bogotaUserService + "email-exists/" + email;
+        try {
+            return Boolean.TRUE.equals(restTemplate.getForObject(url, Boolean.class));
+        } catch (Exception e) {
+            return false;
         }
     }
 

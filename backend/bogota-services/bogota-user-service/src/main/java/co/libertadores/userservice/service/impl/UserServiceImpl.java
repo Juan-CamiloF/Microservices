@@ -2,7 +2,9 @@ package co.libertadores.userservice.service.impl;
 
 import co.libertadores.userservice.controller.request.UserCreateRequest;
 import co.libertadores.userservice.controller.request.UserUpdateRequest;
+import co.libertadores.userservice.entity.Role;
 import co.libertadores.userservice.entity.User;
+import co.libertadores.userservice.repository.IRoleRepository;
 import co.libertadores.userservice.repository.IUserRepository;
 import co.libertadores.userservice.service.IUserService;
 import co.libertadores.userservice.service.exception.UserException;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -26,11 +30,14 @@ public class UserServiceImpl implements IUserService {
 
     private final IUserRepository userRepository;
 
+    private final IRoleRepository roleRepository;
+
     private final ModelMapper modelMapper;
 
 
-    public UserServiceImpl(IUserRepository userRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(IUserRepository userRepository, IRoleRepository roleRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -50,8 +57,19 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<User> findAllInAList() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserException(USER_DOES_NOT_EXISTS));
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserException(USER_DOES_NOT_EXISTS));
     }
 
     @Override
@@ -77,6 +95,16 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean existsById(Long id) {
         return !userRepository.existsById(id);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public List<Role> getRoles() {
+        return roleRepository.findAll();
     }
 
     public User userToCreateConvertToEntity(UserCreateRequest userCreateRequest) {

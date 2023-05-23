@@ -15,11 +15,21 @@
 						{
 							"name": "CREATE USER",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Fandiño\",\n    \"email\": \"juan@gmail.com\"\n}",
+									"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Fandiño\",\n    \"email\": \"juan@gmail.com\",\n    \"password\": \"admin\",\n    \"roles\": [\n        {\n            \"id\": 5,\n            \"name\": \"ROLE_USER_BOGOTA\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -46,11 +56,21 @@
 						{
 							"name": "UPDATE USER",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": 1,\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Fandiño Benavides\",\n    \"email\": \"jcfandinob@libertadores.edu.co\",\n    \"createdAt\": \"2023-01-01\",\n    \"updatedAt\": \"2023-01-01\"\n}",
+									"raw": "{\n    \"id\": 1,\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Fandiño Benavides\",\n    \"email\": \"jcfandinob@libertadores.edu.co\",\n    \"roles\": [\n        {\n            \"id\": 5,\n            \"name\": \"ROLE_USER_BOGOTA\"\n        }\n    ],\n    \"createdAt\": \"2023-01-01\",\n    \"updatedAt\": \"2023-01-01\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -78,6 +98,16 @@
 						{
 							"name": "GET USERS",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -110,10 +140,20 @@
 						{
 							"name": "GET USER",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/bogota/user/1",
+									"raw": "http://localhost:8080/api/v1/bogota/user/3",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -124,7 +164,7 @@
 										"v1",
 										"bogota",
 										"user",
-										"1"
+										"3"
 									]
 								}
 							},
@@ -133,6 +173,16 @@
 						{
 							"name": "DELETE USER",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
@@ -161,6 +211,16 @@
 						{
 							"name": "CREATE TASK",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -192,6 +252,16 @@
 						{
 							"name": "GET TASKS BY USER",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -226,6 +296,16 @@
 						{
 							"name": "GET TASK",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -249,6 +329,16 @@
 						{
 							"name": "DELETE TASK",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
@@ -272,6 +362,16 @@
 						{
 							"name": "UPDATE TASK",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
@@ -309,6 +409,16 @@
 						{
 							"name": "GET STATES",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -341,11 +451,21 @@
 						{
 							"name": "CREATE USER",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Fandiño\",\n    \"email\": \"juan@gmail.com\"\n}",
+									"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Fandiño\",\n    \"email\": \"juan@gmail.com\",\n    \"password\": \"admin\",\n    \"roles\": [\n        {\n            \"id\": 7,\n            \"name\": \"ROLE_USER_MEDELLIN\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -372,11 +492,21 @@
 						{
 							"name": "UPDATE USER",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": 1,\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Fandiño Benavides\",\n    \"email\": \"jcfandinob@libertadores.edu.co\",\n    \"createdAt\": \"2023-01-01\",\n    \"updatedAt\": \"2023-01-01\"\n}",
+									"raw": "{\n    \"id\": 1,\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Fandiño Benavides\",\n    \"email\": \"jcfandinob@libertadores.edu.co\",\n    \"roles\": [\n        {\n            \"id\": 7,\n            \"name\": \"ROLE_USER_MEDELLIN\"\n        }\n    ],\n    \"createdAt\": \"2023-01-01\",\n    \"updatedAt\": \"2023-01-01\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -667,11 +797,21 @@
 						{
 							"name": "CREATE USER",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODQ1NTIwNDQsInN1YiI6ImFkbWluQGJvZ290YSIsImV4cCI6MTY4NDYzODQ0NCwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV19.ZRNyAayDBUQHVxPWr_8CXEqpvpe5KnuMfFtNWxOABlIj5vH5vUjeIwGbQqiC4n1VmrvFEjrXZQTWorIHkavfmA",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Fandiño\",\n    \"email\": \"juan@gmail.com\"\n}",
+									"raw": "{\n    \"name\": \"Juan\",\n    \"lastname\": \"Fandiño\",\n    \"email\": \"juan@calai.com\",\n    \"password\": \"Juano\",\n    \"roles\": [\n        {\n            \"id\": 6,\n            \"name\": \"ROLE_USER_CALI\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -702,7 +842,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": 1,\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Fandiño Benavides\",\n    \"email\": \"jcfandinob@libertadores.edu.co\",\n    \"createdAt\": \"2023-01-01\",\n    \"updatedAt\": \"2023-01-01\"\n}",
+									"raw": "{\n    \"id\": 1,\n    \"name\": \"Juan Actualizado\",\n    \"lastname\": \"Fandiño Benavides\",\n    \"email\": \"jcfandinob@libertadores.edu.co\",\n    \"roles\": [\n        {\n            \"id\": 7,\n            \"name\": \"ROLE_USER_MEDELLIN\"\n        }\n    ],\n    \"createdAt\": \"2023-01-01\",\n    \"updatedAt\": \"2023-01-01\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -983,6 +1123,110 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "AUTH",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jwt = JSON.parse(responseBody).jwt;",
+							"postman.setEnvironmentVariable(\"jwt\", jwt);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"admin@bogota.com\",\n    \"password\":\"bogota\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ROLES",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/role",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET TOTAL USERS",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

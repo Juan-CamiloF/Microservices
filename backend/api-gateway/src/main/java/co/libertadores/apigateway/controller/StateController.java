@@ -16,7 +16,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(value = "*")
 public class StateController {
 
     private static final Logger logger = LoggerFactory.getLogger(StateController.class);
