@@ -10,9 +10,15 @@
 
 ### Medellín
 
-- medellin-user-service: Servicio para usuarios de Medellin
-- medellin-task-service: Servicio para tareas de un usuario de Medellin
-- medellin-state-service: Servicio para estados de tareas de Medellin
+- medellin-user-service: Servicio para usuarios de Medellín
+- medellin-task-service: Servicio para tareas de un usuario de Medellín
+- medellin-state-service: Servicio para estados de tareas de Medellín
+
+### Cali
+
+- cali-user-service: Servicio para usuarios de Cali
+- cali-task-service: Servicio para tareas de un usuario de Cali
+- cali-state-service: Servicio para estados de tareas de Cali
 
 ## Docker
 
@@ -43,8 +49,13 @@ sh script.sh
 ```
 docker compose up --build -d db-bogota
 ```
+#### Cali
 
-#### Medellin
+```
+docker compose up --build -d db-cali
+```
+
+#### Medellín
 
 ```
 docker compose up --build -d db-medellin
@@ -75,8 +86,27 @@ docker compose up --build bogota-task
 ```
 docker compose up --build bogota-state
 ```
+### Servicios Cali
 
-### Servicios Medellin
+- Ejecutar cali-user-service
+
+```
+docker compose up --build cali-user
+```
+
+- Ejecutar cali-task-service
+
+```
+docker compose up --build cali-task
+```
+
+- Ejecutar cali-state-service
+
+```
+docker compose up --build cali-state
+```
+
+### Servicios Medellín
 
 - Ejecutar medellin-user-service
 
@@ -96,10 +126,14 @@ docker compose up --build medellin-task
 docker compose up --build medellin-state
 ```
 
-Si se necesita los servicios en segundo plano agrega bandera _-d_
+Si se necesita alguno de los servicios en segundo plano agrega bandera _-d_
 
 ## Postman
 
 Endpoints registrados hasta el momento importando el siguiente archivo
 
 - Microservices.postman_collection.json
+
+Entornos registrados hasta el momento importando el siguiente archivo
+
+- Microservices.postman_environment.json
