@@ -69,7 +69,7 @@ export default function Dashboard() {
                     <div className="pl-3 pr-10 mt-1">
                         <h3 className="font-normal leading-4 text-gray-800 dark:text-gray-100 text-base">Total Ciudades</h3>
                         <div className="flex items-end mt-4">
-                            <h2 className="text-indigo-700 dark:text-indigo-600 text-2xl leading-normal font-bold">{user.authorities.length >= 2 ? 1 : 3}</h2>
+                            <h2 className="text-indigo-700 dark:text-indigo-600 text-2xl leading-normal font-bold">{user.authorities.length >= 7 ? 3 : 1}</h2>
                         </div>
                         <div className="flex items-center mt-5">
                             <div className="text-green-400">
