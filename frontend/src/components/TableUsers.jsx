@@ -7,6 +7,7 @@ import useDarkSide from "../hooks/useDarkSite";
 import Header from "./Header";
 import ModalAddUser from "./ModalAddUser";
 import ModalEditUser from "./ModalEditUser";
+import clienteAxios from "../config/axios";
 
 function TableUsers() {
 
@@ -48,7 +49,7 @@ function TableUsers() {
         "Access-Control-Allow-Origin": "*",
       };
 
-      const { data } = await axios.get(
+      const { data } = await clienteAxios.get(
         `http://localhost:8080/api/v1/${ciudad}/user`,
         config
       );
@@ -64,7 +65,7 @@ function TableUsers() {
       "Access-Control-Allow-Origin": "*",
     };
 
-    await axios.put(
+    await clienteAxios.put(
       `http://localhost:8080/api/v1/${ciudad}/user/${updateUser.id}`,
       updateUser,
       config
@@ -119,7 +120,7 @@ function TableUsers() {
       "Access-Control-Allow-Origin": "*",
     };
 
-    const { data } = await axios.post(
+    const { data } = await clienteAxios.post(
       `http://localhost:8080/api/v1/${ciudad}/user`,
       newUser,
       config

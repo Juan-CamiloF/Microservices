@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import ModalAddTask from "./ModalAddTask";
 import ModalEditTask from "./ModalEditTask";
 import ModalInfoTask from "./ModalInfoTask";
+import clienteAxios from "../config/axios";
 
 function TableTasks({ id, city }) {
 
@@ -52,7 +53,7 @@ function TableTasks({ id, city }) {
         "Access-Control-Allow-Origin": "*",
       };
 
-      const { data } = await axios.get(
+      const { data } = await clienteAxios.get(
         `http://localhost:8080/api/v1/${city}/task/by-user/${id}`,
         config
       );
@@ -68,7 +69,7 @@ function TableTasks({ id, city }) {
       "Access-Control-Allow-Origin": "*",
     };
 
-    const { data } = await axios.put(
+    const { data } = await clienteAxios.put(
       `http://localhost:8080/api/v1/${city}/task/${updateUser.id}`,
       updateUser,
       config
@@ -99,7 +100,7 @@ function TableTasks({ id, city }) {
       "Access-Control-Allow-Origin": "*",
     };
 
-    await axios.delete(`http://localhost:8080/api/v1/${city}/task/${id}`, config);
+    await clienteAxios.delete(`http://localhost:8080/api/v1/${city}/task/${id}`, config);
 
     toast.success("Tarea eliminada correctamente", {
       position: "top-right",
@@ -125,7 +126,7 @@ function TableTasks({ id, city }) {
 
     newTask.userId = id;
 
-    const { data } = await axios.post(
+    const { data } = await clienteAxios.post(
       `http://localhost:8080/api/v1/${city}/task`,
       newTask,
       config

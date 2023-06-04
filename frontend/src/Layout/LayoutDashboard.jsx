@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
-import { Link, Outlet } from 'react-router-dom';
+import React, { useContext, useState } from 'react'
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import menuItems from '../helpers/menuItem';
+import { UserContext } from '../context';
 
 const LayoutDashboard = () => {
 
@@ -10,6 +12,18 @@ const LayoutDashboard = () => {
     const [menu2, setMenu2] = useState(false);
     const [menu3, setMenu3] = useState(false);
 
+    const { user, logout } = useContext(UserContext);
+    const navigate = useNavigate()
+
+    const allowedMenuItems = menuItems.filter(item => {
+        return user.authorities.some(({ authority }) => item.allowedRoles.includes(authority));
+    });
+
+    const hanldeLogout = () => {
+        logout()
+        navigate("/")
+    }
+
     return (
         <div className="w-full h-full bg-gray-200">
             <div className="flex flex-no-wrap">
@@ -19,48 +33,15 @@ const LayoutDashboard = () => {
 
                     </div>
                     <ul aria-orientation="vertical" className=" py-6">
-                    <Link to="">
-                        <li className="pl-6 cursor-pointer text-white text-sm leading-3 tracking-normal pb-4 pt-5 text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                            <div className="flex items-center">
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-grid" width={20} height={20} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" />
-                                        <rect x={4} y={4} width={6} height={6} rx={1} />
-                                        <rect x={14} y={4} width={6} height={6} rx={1} />
-                                        <rect x={4} y={14} width={6} height={6} rx={1} />
-                                        <rect x={14} y={14} width={6} height={6} rx={1} />
-                                    </svg>
-                                </div>
-                                <span className="ml-2">Dashboard</span>
-                            </div>
-                        </li>
-                        </Link>
-                        <Link to="ciudad/bogota">
-                            <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                                <div className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-puzzle" width={20} height={20} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" />
-                                        <path d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1" />
-                                    </svg>
-                                    <span className="ml-2">Bogotá</span>
-                                </div>
-                            </li>
-                        </Link>
-                        <Link to="ciudad/medellin">
-                        <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
-                            <div className="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-compass" width={20} height={20} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" />
-                                    <polyline points="8 16 10 10 16 8 14 14 8 16" />
-                                    <circle cx={12} cy={12} r={9} />
-                                </svg>
-                                <span className="ml-2">Medellín</span>
-                            </div>
-                        </li>
-                        </Link>
-                     
-
-                      
+                        {allowedMenuItems.map(item => (
+                            <Link to={item.path} key={item.path}>
+                                <li className="pl-6 cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-4 mb-4 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                                    <div className="flex items-center">
+                                        <span className="ml-2">{item.label}</span>
+                                    </div>
+                                </li>
+                            </Link>
+                        ))}
                     </ul>
                 </div>
                 {/*Mobile responsive sidebar*/}
@@ -156,7 +137,7 @@ const LayoutDashboard = () => {
                                     <div className="w-full flex items-center justify-between px-6 pt-1">
                                         <div className="flex items-center">
                                             <img alt="profile-pic" src="hJ" className="w-8 h-8 rounded-md" />
-                                            <p className="md:text-xl text-gray-800 text-base leading-4 ml-2">Libertadores</p>
+                                            <p className="md:text-xl text-gray-800 text-base leading-4 ml-2">{user.email}</p>
                                         </div>
                                         <ul className="flex">
                                             <li className="cursor-pointer text-white pt-5 pb-3">
@@ -203,22 +184,13 @@ const LayoutDashboard = () => {
                             </div>
                             <div className="w-1/2 hidden lg:flex">
                                 <div className="w-full flex items-center pl-8 justify-end">
-                                   
+
                                     <div className="flex items-center relative cursor-pointer" onClick={() => setProfile(!profile)}>
                                         <div className="rounded-full">
                                             {profile ? (
                                                 <ul className="p-2 w-full border-r bg-white absolute rounded left-0 shadow mt-12 sm:mt-16 ">
-                                                    <li className="flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center">
-                                                        <div className="flex items-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-user" width={18} height={18} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                                                <path stroke="none" d="M0 0h24v24H0z" />
-                                                                <circle cx={12} cy={7} r={4} />
-                                                                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                                                            </svg>
-                                                            <span className="text-sm ml-2">Mi perfil</span>
-                                                        </div>
-                                                    </li>
-                                                    <li className="flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center mt-2">
+
+                                                    <li onClick={hanldeLogout} className="flex w-full justify-between text-gray-600 hover:text-indigo-700 cursor-pointer items-center">
                                                         <div className="flex items-center">
                                                             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-logout" width={20} height={20} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                                 <path stroke="none" d="M0 0h24v24H0z" />
@@ -237,7 +209,7 @@ const LayoutDashboard = () => {
                                                 <div className="w-2 h-2 rounded-full bg-green-400 border border-white absolute inset-0 mb-0 mr-0 m-auto" />
                                             </div>
                                         </div>
-                                        <p className="text-gray-800 text-sm mx-3">Libertadores</p>
+                                        <p className="text-gray-800 text-sm mx-3">{user.email}</p>
                                         <div className="cursor-pointer text-gray-600">
                                             <svg aria-haspopup="true" xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-down" width={20} height={20} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" />

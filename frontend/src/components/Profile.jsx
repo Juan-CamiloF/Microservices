@@ -7,6 +7,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import clienteAxios from "../config/axios";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Profile = () => {
         "Access-Control-Allow-Origin": "*",
       };
       try {
-        const { data } = await axios.get(
+        const { data } = await clienteAxios.get(
           `http://localhost:8080/api/v1/${city}/user/${id}`,
           config
         );

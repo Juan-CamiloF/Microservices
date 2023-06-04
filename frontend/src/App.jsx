@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import LayoutDashboard from "./Layout/LayoutDashboard";
 import City from "./pages/City";
+import AuthGuard from "./guard/AuthGuard";
 
 function App() {
   return (
@@ -22,11 +23,11 @@ function App() {
       <ToastContainer limit={1} autoClose={2000} />
       <Router>
 
+        <RoutesWithNotFound>
 
-          <RoutesWithNotFound>
+          <Route path="/" element={<Login />} />
 
-            <Route path="/" element={<Login />} />
-
+          <Route element={<AuthGuard />}>
             <Route path="/dashboard" element={<LayoutDashboard />}>
               <Route index element={<Dashboard />} />
               <Route path="ciudad/:city" element={<City />} />
@@ -35,8 +36,10 @@ function App() {
               <Route path="tareas" element={<City />} />
             </Route>
 
-          </RoutesWithNotFound>
- 
+          </Route>
+
+        </RoutesWithNotFound>
+
       </Router>
     </Suspense>
   );

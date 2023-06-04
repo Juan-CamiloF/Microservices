@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import clienteAxios from "../config/axios";
 
 const ModalAddTask = ({ handleModalAddTask, crearTask,id,city }) => {
   const [userNewTask, setNewTask] = useState({
@@ -21,7 +22,7 @@ const ModalAddTask = ({ handleModalAddTask, crearTask,id,city }) => {
         "Access-Control-Allow-Origin": "*",
       };
 
-      const { data } = await axios.get(
+      const { data } = await clienteAxios.get(
         `http://localhost:8080/api/v1/${city}/state`,
         config
       );
