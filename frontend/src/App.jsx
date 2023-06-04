@@ -21,24 +21,22 @@ function App() {
     <Suspense fallback={<PageLoading />}>
       <ToastContainer limit={1} autoClose={2000} />
       <Router>
-        <RoutesWithNotFound>
 
-          <Route path="/login" element={<Login />} />
 
-          <Route path="/" element={<LayoutMain />}>
-   
-            <Route index path="/" element={<TableUsers />} />
-          </Route>
+          <RoutesWithNotFound>
 
-          <Route path="/dashboard" element={<LayoutDashboard />}>
-            <Route index element={<Dashboard />} />
-            <Route path="ciudad/:city" element={<City />} />
-            <Route path="perfil" element={<Profile />} />
-            <Route path="usuarios" element={<City />} />
-            <Route path="tareas" element={<City />} />
-          </Route>
+            <Route path="/" element={<Login />} />
 
-        </RoutesWithNotFound>
+            <Route path="/dashboard" element={<LayoutDashboard />}>
+              <Route index element={<Dashboard />} />
+              <Route path="ciudad/:city" element={<City />} />
+              <Route path="perfil" element={<Profile />} />
+              <Route path="usuarios" element={<City />} />
+              <Route path="tareas" element={<City />} />
+            </Route>
+
+          </RoutesWithNotFound>
+ 
       </Router>
     </Suspense>
   );
