@@ -137,3 +137,14 @@ Endpoints registrados hasta el momento importando el siguiente archivo
 Entornos registrados hasta el momento importando el siguiente archivo
 
 - Microservices.postman_environment.json
+
+## Credenciales usuarios
+
+| Correo                | Contraseña | Roles                                    |  Permisos |
+|:---------------------:|:---------: |:----------------------------------------:|:----------: |
+| admin@general.com     | admin      | Todos los roles                          |  Acceso total |
+| admin@bogota.com      | bogota     | ROLE_ADMIN_BOGOTA, ROLE_USER_BOGOTA      |  Administración usuarios de bogota |
+| admin@medellin.com    | medellin   | ROLE_ADMIN_MEDELLIN, ROLE_USER_MEDELLIN  |  Administración usuarios de medellin |
+| admin@cali.com        | cali       | ROLE_ADMIN_CALI, ROLE_USER_CALI          |  Administración de usuarios de cali |
+
+
