@@ -25,9 +25,9 @@ const Login = () => {
         })
     }
 
-    useEffect(()=>{
-       localStorage.clear()
-    },[])
+    useEffect(() => {
+        localStorage.clear()
+    }, [])
 
     const hanldeSubmit = async (e) => {
         e.preventDefault();
@@ -48,15 +48,15 @@ const Login = () => {
 
         try {
 
-            //const { data } = await clienteAxios.post('auth', form);
+            const { data } = await clienteAxios.post('auth', { ...form });
 
-            //const usuario = jwt_decode(data.jwt);
+            const usuario = jwt_decode(data.jwt);
 
-            const usuario = jwt_decode("eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU5MTk2ODAsInN1YiI6ImFkbWluQGdlbmVyYWwuY29tIiwiZXhwIjoxNjg2MDA2MDgwLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSX0NBTEkifSx7ImF1dGhvcml0eSI6IlJPTEVfQURNSU5fQk9HT1RBIn0seyJhdXRob3JpdHkiOiJST0xFX1VTRVJfTUVERUxMSU4ifSx7ImF1dGhvcml0eSI6IlJPTEVfQURNSU5fTUVERUxMSU4ifSx7ImF1dGhvcml0eSI6IlJPTEVfQURNSU5fQ0FMSSJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSX0JPR09UQSJ9XX0.kGwx7j42Zjz2S47KsSTtSAcbbToSXgMYTNUCj0-4QujFfnzh2gpkT86Rdbha3VtQPkICqM5H7Zt6jNCpGt0R3Q");
+            //const usuario = jwt_decode("eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2ODU5MTk2ODAsInN1YiI6ImFkbWluQGdlbmVyYWwuY29tIiwiZXhwIjoxNjg2MDA2MDgwLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSX0NBTEkifSx7ImF1dGhvcml0eSI6IlJPTEVfQURNSU5fQk9HT1RBIn0seyJhdXRob3JpdHkiOiJST0xFX1VTRVJfTUVERUxMSU4ifSx7ImF1dGhvcml0eSI6IlJPTEVfQURNSU5fTUVERUxMSU4ifSx7ImF1dGhvcml0eSI6IlJPTEVfQURNSU5fQ0FMSSJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9BRE1JTiJ9LHsiYXV0aG9yaXR5IjoiUk9MRV9VU0VSX0JPR09UQSJ9XX0.kGwx7j42Zjz2S47KsSTtSAcbbToSXgMYTNUCj0-4QujFfnzh2gpkT86Rdbha3VtQPkICqM5H7Zt6jNCpGt0R3Q");
 
             console.log(usuario);
 
-            localStorage.setItem('usuario', JSON.stringify({ authorities: usuario.authorities, auth: true, email: usuario.sub }));
+            localStorage.setItem('usuario', JSON.stringify({ authorities: usuario.authorities, auth: true, email: usuario.sub, token: data.jwt }));
 
             login(usuario)
 

@@ -48,9 +48,14 @@ function TableTasks({ id, city }) {
 
   useEffect(() => {
     const getTasks = async () => {
+      const { token } = JSON.parse(localStorage.getItem("usuario"));
+
       const config = {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${token}`
+        }
       };
 
       const { data } = await clienteAxios.get(
@@ -64,10 +69,15 @@ function TableTasks({ id, city }) {
   }, []);
 
   const editarUsuario = async (updateUser) => {
-    const config = {
-      "Content-Type": "application/json;charset=UTF-8",
-      "Access-Control-Allow-Origin": "*",
-    };
+    const { token } = JSON.parse(localStorage.getItem("usuario"));
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${token}`
+        }
+      };
 
     const { data } = await clienteAxios.put(
       `http://localhost:8080/api/v1/${city}/task/${updateUser.id}`,
@@ -95,9 +105,14 @@ function TableTasks({ id, city }) {
 
   const eliminarTarea = async (id) => {
     setShow(null);
+    const { token } = JSON.parse(localStorage.getItem("usuario"));
+
     const config = {
-      "Content-Type": "application/json;charset=UTF-8",
-      "Access-Control-Allow-Origin": "*",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${token}`
+      }
     };
 
     await clienteAxios.delete(`http://localhost:8080/api/v1/${city}/task/${id}`, config);
@@ -119,9 +134,14 @@ function TableTasks({ id, city }) {
   };
 
   const crearTask = async (newTask) => {
+    const { token } = JSON.parse(localStorage.getItem("usuario"));
+
     const config = {
-      "Content-Type": "application/json;charset=UTF-8",
-      "Access-Control-Allow-Origin": "*",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${token}`
+      }
     };
 
     newTask.userId = id;

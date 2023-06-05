@@ -25,13 +25,18 @@ const Profile = () => {
 
   useEffect(() => {
     const getUser = async () => {
+      const { token } = JSON.parse(localStorage.getItem("usuario"));
+
       const config = {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${token}`
+        }
       };
       try {
         const { data } = await clienteAxios.get(
-          `http://localhost:8080/api/v1/${city}/user/${id}`,
+          `http://localhost:8080/api/v1/${city}/user/${id}/pageNumber=0&pageSize=10`,
           config
         );
 

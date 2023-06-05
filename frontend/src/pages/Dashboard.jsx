@@ -11,13 +11,15 @@ export default function Dashboard() {
 
     useEffect(() => {
         const getUsers = async () => {
+            const { token } = JSON.parse(localStorage.getItem("usuario"));
+
             const config = {
+              headers: {
                 "Content-Type": "application/json;charset=UTF-8",
                 "Access-Control-Allow-Origin": "*",
+                Authorization: `Bearer ${token}`
+              }
             };
-
-
-
 
             if (user.authorities.length >= 7) {
                 const { data } = await clienteAxios.get(
@@ -33,7 +35,7 @@ export default function Dashboard() {
                 const city = user.email.match(/@(.+?)\./)[1];
 
                 const { data } = await clienteAxios.get(
-                    `${city}/user`,
+                    `${city}/user/pageNumber=0&pageSize=10`,
                     config
                 );
 

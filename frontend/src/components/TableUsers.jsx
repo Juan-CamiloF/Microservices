@@ -44,15 +44,21 @@ function TableUsers() {
 
   useEffect(() => {
     const getUsers = async () => {
-      const config = {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-      };
+      const { token } = JSON.parse(localStorage.getItem("usuario"));
 
+      const config = {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${token}`
+        }
+      };
+      
       const { data } = await clienteAxios.get(
-        `http://localhost:8080/api/v1/${ciudad}/user`,
+        `http://localhost:8080/api/v1/${ciudad}/user/pageNumber=0&pageSize=10`,
         config
       );
+      
 
       setUsers([...data]);
     };
@@ -60,9 +66,14 @@ function TableUsers() {
   }, [ciudad]);
 
   const editarUsuario = async (updateUser) => {
+    const { token } = JSON.parse(localStorage.getItem("usuario"));
+
     const config = {
-      "Content-Type": "application/json;charset=UTF-8",
-      "Access-Control-Allow-Origin": "*",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${token}`
+      }
     };
 
     await clienteAxios.put(
@@ -96,7 +107,7 @@ function TableUsers() {
       "Access-Control-Allow-Origin": "*",
     };
 
-    await axios.delete(`http://localhost:8080/api/v1/${ciudad}/user/${id}`, config);
+    await axios.delete(`http://localhost:8080/api/v1/${ciudad}/user/${id}/pageNumber=0&pageSize=10`, config);
 
     toast.success("Usuario eliminado correctamente", {
       position: "top-right",
@@ -121,7 +132,7 @@ function TableUsers() {
     };
 
     const { data } = await clienteAxios.post(
-      `http://localhost:8080/api/v1/${ciudad}/user`,
+      `http://localhost:8080/api/v1/${ciudad}/user/pageNumber=0&pageSize=10`,
       newUser,
       config
     );

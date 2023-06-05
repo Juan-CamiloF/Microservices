@@ -17,9 +17,14 @@ const ModalAddTask = ({ handleModalAddTask, crearTask,id,city }) => {
 
   useEffect(() => {
     const getStatus = async () => {
+      const { token } = JSON.parse(localStorage.getItem("usuario"));
+
       const config = {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${token}`
+        }
       };
 
       const { data } = await clienteAxios.get(
