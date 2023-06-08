@@ -2,7 +2,6 @@ package co.libertadores.apigateway.service.impl.bogota;
 
 import co.libertadores.apigateway.api.RestPageImpl;
 import co.libertadores.apigateway.api.Task;
-import co.libertadores.apigateway.api.User;
 import co.libertadores.apigateway.api.request.TaskCreateRequest;
 import co.libertadores.apigateway.api.request.TaskUpdateRequest;
 import co.libertadores.apigateway.api.response.TaskCreateUpdateResponse;

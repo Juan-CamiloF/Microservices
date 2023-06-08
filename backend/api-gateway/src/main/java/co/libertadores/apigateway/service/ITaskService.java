@@ -6,8 +6,6 @@ import co.libertadores.apigateway.api.request.TaskUpdateRequest;
 import co.libertadores.apigateway.api.response.TaskCreateUpdateResponse;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 public interface ITaskService {
 
     TaskCreateUpdateResponse save(TaskCreateRequest taskCreateRequest);

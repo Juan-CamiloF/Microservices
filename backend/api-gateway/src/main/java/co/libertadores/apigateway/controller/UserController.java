@@ -1,6 +1,5 @@
 package co.libertadores.apigateway.controller;
 
-import co.libertadores.apigateway.api.Role;
 import co.libertadores.apigateway.api.User;
 import co.libertadores.apigateway.api.request.UserCreateRequest;
 import co.libertadores.apigateway.api.request.UserUpdateRequest;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController

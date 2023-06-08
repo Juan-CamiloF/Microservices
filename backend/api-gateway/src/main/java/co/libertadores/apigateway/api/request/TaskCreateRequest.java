@@ -48,4 +48,14 @@ public class TaskCreateRequest {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 }
