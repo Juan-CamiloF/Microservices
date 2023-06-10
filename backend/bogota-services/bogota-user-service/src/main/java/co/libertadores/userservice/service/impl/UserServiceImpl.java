@@ -82,6 +82,7 @@ public class UserServiceImpl implements IUserService {
         }
         User updatedUser = userToUpdateConvertToEntity(userUpdateRequest);
         updatedUser.setUpdatedAt(LocalDate.now());
+        updatedUser.setPassword(user.getPassword());
         return userRepository.save(updatedUser);
     }
 
