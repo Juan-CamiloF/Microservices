@@ -12,8 +12,6 @@ const City = () => {
   const { city } = useParams()
   const navigate = useNavigate()
 
-  console.log(user)
-
   const email = user?.email;
   const ciudadUser = email ? email.match(/@(.+?)\./)?.[1] : "";
   

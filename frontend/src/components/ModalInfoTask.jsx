@@ -123,10 +123,10 @@ const ModalInfoTask = ({ taskInfo, handleModalInfo }) => {
                       Cancel
                     </button>
                     <button
-                      type="submit"
+                        onClick={handleModalInfo}
                       className="px-6 py-3 bg-gray-700 hover:bg-gray-800 hover:bg-opacity-80 shadow rounded text-sm text-white"
                     >
-                      Confirmar cambios
+                      Confirmar
                     </button>
                   </div>
                 </form>

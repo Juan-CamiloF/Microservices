@@ -2,6 +2,10 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import clienteAxios from "../config/axios";
 import { UserContext } from "../context";
+
+const rolesPermitidos = ["ROLE_ADMIN_CALI", "ROLE_ADMIN_MEDELLIN", "ROLE_ADMIN_BOGOTA"];
+const rolesUsuarios = ["ROLE_USER_CALI", "ROLE_USER_MEDELLIN", "ROLE_USER_BOGOTA"];
+
 export default function Dashboard() {
 
     const [usuarios, setUsuario] = useState([])
@@ -9,24 +13,24 @@ export default function Dashboard() {
 
     const { user } = useContext(UserContext)
 
+
     useEffect(() => {
         const getUsers = async () => {
+
             const { token } = JSON.parse(localStorage.getItem("usuario"));
 
             const config = {
-              headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                "Access-Control-Allow-Origin": "*",
-                Authorization: `Bearer ${token}`
-              }
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             };
 
             if (user.authorities.length >= 7) {
+
                 const { data } = await clienteAxios.get(
                     `users`,
                     config
                 );
-
 
                 setUsuario([...data]);
                 return
@@ -35,18 +39,21 @@ export default function Dashboard() {
                 const city = user.email.match(/@(.+?)\./)[1];
 
                 const { data } = await clienteAxios.get(
-                    `${city}/user/pageNumber=0&pageSize=10`,
+                    `${city}/user?pageNumber=0&pageSize=5`,
                     config
                 );
 
-                setUsuario([data]);
+                let usuarios = data.content.filter(elemento => !elemento.email.includes('admin'))
+
+
+                setUsuario([...usuarios]);
 
             }
 
         };
 
         getUsers();
-    }, []);
+    }, [user]);
 
 
 
@@ -115,48 +122,71 @@ export default function Dashboard() {
 
 
             <div className="container px-6 mt-10 mx-auto flex flex-col md:flex-row items-start md:items-center justify-between">
-                <h4 className="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-100">Usuarios</h4>
+                <h4 className="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-100">{user.email.includes('general') ? "Administradores" : "Usuarios"}</h4>
 
             </div>
 
             <div className="py-10 container mx-auto overflow-x-auto">
-
-
-
-
                 <table className="w-full shadow text-left bg-white dark:bg-gray-800">
                     <thead>
                         <tr className="border-b border-gray-300 dark:border-gray-200">
                             <th className="py-5 pl-2 sm:pl-10 w-1/4 text-base dark:text-gray-100 text-gray-800">ID</th>
-                            <th className="py-5 w-1/4 text-base dark:text-gray-100 text-gray-800 text-center ">Usuario</th>
-                            <th className="py-5 w-1/4 text-base dark:text-gray-100 text-gray-800 text-center">Última fecha de actualización</th>
-                            <th className="py-5 w-1/4 text-base dark:text-gray-100 text-gray-800 text-right pr-2 sm:pr-10">Fecha de registro</th>
+                            <th className="py-5 w-1/4 text-base dark:text-gray-100 text-gray-800  ">Usuario</th>
+                            <th className="py-5 w-1/4 text-base dark:text-gray-100 text-gray-800 ">Última fecha de actualización</th>
+                            <th className="py-5 w-1/4 text-base dark:text-gray-100 text-gray-800  ">Fecha de registro</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        {usuarios?.map((user, index) => (
 
-                            <tr className="border-b border-gray-200">
+                        {
+                            user.email.includes('general') ?
 
-                                <td className="pl-2 sm:pl-10 pr-2 py-4">
-                                    <div className="flex items-center">
-                                        {user.id}
-                                    </div>
-                                </td>
+                                usuarios.filter(elemento => elemento.roles.some(rol => rolesPermitidos.includes(rol.name))).map((user, index) => (
 
-                                <td className=" pt-4 pb-5 text-center gray-800 text-xs sm:text-sm">
-                                    <p className="font-medium">{user.email}</p>
-                                    <p className="text-xs leading-3 text-left text-gray-600 pt-2 dark:text-white">
-                                        {user.name} {user.lastname}
-                                    </p>
-                                </td>
+                                    <tr className="border-b border-gray-200" key={index}>
 
-                                <td className="pr-2 pt-4 pb-5  text-xs sm:text-sm text-center">   {user.updatedAt}</td>
-                                <td className="pt-4 pb-5 dark:text-gray-100 text-gray-800 pr-2 sm:pr-10 text-xs sm:text-sm text-right">{user.createdAt}</td>
-                            </tr>
+                                        <td className="pl-2 sm:pl-10 pr-2 py-4">
+                                            <div className="flex items-center">
+                                                {user.id}
+                                            </div>
+                                        </td>
 
-                        ))}
+                                        <td className=" pt-4 pb-5  gray-800 text-xs sm:text-sm">
+                                            <p className="font-medium">{user.email}</p>
+                                        </td>
+
+                                        <td className="pr-2 pt-4 pb-5  text-xs sm:text-sm ">   {user.updatedAt}</td>
+                                        <td className="pt-4 pb-5 dark:text-gray-100 text-gray-800 pr-2 sm:pr-10 text-xs sm:text-sm ">{user.createdAt}</td>
+                                    </tr>
+
+                                ))
+
+                                :
+                                usuarios.map((user, index) => (
+
+                                    <tr className="border-b border-gray-200" key={index}>
+
+                                        <td className="pl-2 sm:pl-10 pr-2 py-4">
+                                            <div className="flex items-center">
+                                                {user.id}
+                                            </div>
+                                        </td>
+
+                                        <td className=" pt-4 pb-5  gray-800 text-xs sm:text-sm">
+                                            <p className="font-medium">{user.email}</p>
+                                        </td>
+
+                                        <td className="pr-2 pt-4 pb-5  text-xs sm:text-sm ">   {user.updatedAt}</td>
+                                        <td className="pt-4 pb-5 dark:text-gray-100 text-gray-800 pr-2 sm:pr-10 text-xs sm:text-sm ">{user.createdAt}</td>
+                                    </tr>
+
+                                ))
+
+                        }
+
+
+
 
 
                     </tbody>

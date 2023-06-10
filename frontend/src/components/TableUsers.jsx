@@ -15,6 +15,8 @@ function TableUsers() {
 
   const [ciudad, setCiudad] = useState(city)
 
+  const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     setCiudad(city)
   }, [city])
@@ -25,6 +27,10 @@ function TableUsers() {
 
   const [modalEdit, setModalEdit] = useState(false);
   const [userEdit, setUserEdit] = useState(false);
+  const [number, setNumber] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
+  const [totalElements, setTotalElements] = useState(0)
+  const [numberOfElements, setNumberOfElements] = useState(0)
 
   const handleModalAddUser = () => {
     setModal(!modal);
@@ -48,30 +54,29 @@ function TableUsers() {
 
       const config = {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${token}`
         }
       };
-      
+
       const { data } = await clienteAxios.get(
-        `http://localhost:8080/api/v1/${ciudad}/user/pageNumber=0&pageSize=10`,
+        `http://localhost:8080/api/v1/${ciudad}/user?pageNumber=${number}&pageSize=5`,
         config
       );
-      
 
-      setUsers([...data]);
+      setNumber(data.number)
+      setTotalElements(data.totalElements)
+      setNumberOfElements(data.numberOfElements)
+      setTotalPages(data.totalPages)
+      setUsers([...data.content]);
     };
     getUsers();
-  }, [ciudad]);
+  }, [ciudad, number]);
 
   const editarUsuario = async (updateUser) => {
     const { token } = JSON.parse(localStorage.getItem("usuario"));
 
     const config = {
       headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`
       }
     };
@@ -102,12 +107,14 @@ function TableUsers() {
 
   const eliminarUsuario = async (id) => {
     setShow(null);
+    const { token } = JSON.parse(localStorage.getItem("usuario"));
     const config = {
-      "Content-Type": "application/json;charset=UTF-8",
-      "Access-Control-Allow-Origin": "*",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     };
 
-    await axios.delete(`http://localhost:8080/api/v1/${ciudad}/user/${id}/pageNumber=0&pageSize=10`, config);
+    await axios.delete(`http://localhost:8080/api/v1/${ciudad}/user/${id}`, config);
 
     toast.success("Usuario eliminado correctamente", {
       position: "top-right",
@@ -126,13 +133,19 @@ function TableUsers() {
   };
 
   const crearUsuario = async (newUser) => {
+
+    const { token } = JSON.parse(localStorage.getItem("usuario"));
+
     const config = {
-      "Content-Type": "application/json;charset=UTF-8",
-      "Access-Control-Allow-Origin": "*",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     };
 
+    newUser.password = "123456";
+
     const { data } = await clienteAxios.post(
-      `http://localhost:8080/api/v1/${ciudad}/user/pageNumber=0&pageSize=10`,
+      `http://localhost:8080/api/v1/${ciudad}/user`,
       newUser,
       config
     );
@@ -148,7 +161,11 @@ function TableUsers() {
       theme: "light",
     });
 
-    setUsers([...users, data.user]);
+    if (users.length < 5) {
+      setUsers([...users, data.user]);
+    }
+
+    setTotalElements(totalElements + 1)
   };
 
   return (
@@ -187,7 +204,7 @@ function TableUsers() {
             </thead>
             <tbody className="w-full">
               {users?.map((user, index) => (
-                <tr className="h-20 text-sm leading-none text-gray-800 dark:bg-gray-700 dark:text-white bg-white hover:bg-gray-100 border-b border-t border-gray-100">
+                <tr key={index} className="h-20 text-sm leading-none text-gray-800 dark:bg-gray-700 dark:text-white bg-white hover:bg-gray-100 border-b border-t border-gray-100">
                   <td className="pl-4 text-left">
                     <p className="text-sm font-medium leading-none text-gray-800 dark:text-white">
                       {user.id}
@@ -317,6 +334,43 @@ function TableUsers() {
               ))}
             </tbody>
           </table>
+
+          {users?.length !== 0 && (
+            <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+              <p className="text-xs xs:text-sm text-gray-900 mb-1">
+                Pag {number + 1} de {totalPages}
+              </p>
+              <p className="text-xs xs:text-sm text-gray-900">
+                Mostrando de 1 a {numberOfElements} entradas de {totalElements}
+              </p>
+
+              <div className="inline-flex mt-2 xs:mt-0">
+                <button
+                  onClick={() => number + 1 !== 1 && setNumber(number - 1)}
+                  className={`text-sm font-semibold py-2 px-4 rounded-r ${(number + 1) !== 1
+                      ? "bg-gray-300 hover:bg-gray-400 text-gray-800"
+                      : "disabled:opacity-25"
+                    }`}
+                  disabled={(number + 1) !== 1 ? false : true}
+                >
+                  Ant
+                </button>
+                <button
+                  onClick={() =>
+                    number < totalPages && setNumber(number + 1)
+                  }
+                  className={`text-sm font-semibold py-2 px-4 rounded-r ${(number + 1) < totalPages
+                      ? "bg-gray-300 hover:bg-gray-400 text-gray-800"
+                      : "disabled:opacity-25"
+                    }`}
+                  disabled={number + 1 < totalPages ? false : true}
+                >
+                  Sig
+                </button>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
 

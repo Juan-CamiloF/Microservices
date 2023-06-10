@@ -29,16 +29,17 @@ const Profile = () => {
 
       const config = {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${token}`
         }
       };
       try {
         const { data } = await clienteAxios.get(
-          `http://localhost:8080/api/v1/${city}/user/${id}/pageNumber=0&pageSize=10`,
+          `http://localhost:8080/api/v1/${city}/user/${id}`,
           config
         );
+
+
+
 
         setUser(data);
       } catch (err) {
@@ -51,9 +52,13 @@ const Profile = () => {
   }, [id]);
 
   const eliminarUsuario = async (id) => {
+
+    const { token } = JSON.parse(localStorage.getItem("usuario"));
+
     const config = {
-      "Content-Type": "application/json;charset=UTF-8",
-      "Access-Control-Allow-Origin": "*",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     };
 
     await axios.delete(`http://localhost:8080/api/v1/${city}/user/${id}`, config);
@@ -104,7 +109,6 @@ const Profile = () => {
 
         <div className="flex items-center gap-3 relative">
           <button
-            onclick="event.stopPropagation();toggleInteraction()"
             className="bg-red-700 text-white text-xs font-medium py-2 px-4 hover:bg-red-600 rounded-[4px]"
             onClick={() => eliminarUsuario(id)}
           >
